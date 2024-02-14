@@ -15,9 +15,9 @@ class GradientButton extends StatelessWidget {
     this.borderRadius,
     this.width,
     this.height = 44.0,
-    this.gradient = const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
+    this.gradient =
+        const LinearGradient(colors: [Color(0xff6003A2), Color(0xff260145)]),
   });
-
   @override
   Widget build(BuildContext context) {
     final borderRadius = this.borderRadius ?? BorderRadius.circular(0);

@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: const Color(0xff13001F),
+          scaffoldBackgroundColor: const Color(0xffFEFAFF),
           appBarTheme: const AppBarTheme(
             centerTitle: true,
             elevation: 0,
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         home: const SplashScreen(),
         routes: {
           '/homepage': (context) => const HomePage(),
-          '/signin': (context) => const SignInPage(),
+          '/signin': (context) => SignInPage(),
           '/signup': (context) => const SignUpPage(),
         });
   }

@@ -16,12 +16,10 @@ class OnboardingPage extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // const SizedBox(height: 108),
-
               Expanded(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // logo
                     Padding(
@@ -32,6 +30,7 @@ class OnboardingPage extends StatelessWidget {
                         height: 272,
                       ),
                     ),
+
                     const Padding(
                       padding: EdgeInsets.only(left: 44.0, right: 44.0),
                       child: Text(
@@ -48,87 +47,78 @@ class OnboardingPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                  child: Column(
-                children: [
-                  // Sign in button
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 28.0,
-                      right: 28.0,
-                      bottom: 16.0,
-                    ),
-                    child: GradientButton(
-                      width: double.infinity,
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/signin');
-                      },
-                      borderRadius: BorderRadius.circular(100),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xff6003A2),
-                          Color(0xff260145),
-                        ],
+                child: Column(
+                  children: [
+                    // Sign in button
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 28.0,
+                        right: 28.0,
+                        bottom: 16.0,
                       ),
-                      child: const Text(
-                        'Entre',
-                        style: TextStyle(
-                          color: Color(0xffFEFEFE),
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w600,
+                      child: GradientButton(
+                        width: double.infinity,
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/signin');
+                        },
+                        borderRadius: BorderRadius.circular(100),
+                        child: const Text(
+                          'Entre',
+                          style: TextStyle(
+                            color: Color(0xffFEFEFE),
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  // Sign up button
-
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 28.0,
-                      right: 28.0,
-                      bottom: 38.0,
-                    ),
-                    child: DefaultButton(
-                      width: double.infinity,
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/signup');
-                      },
-                      borderRadius: BorderRadius.circular(100),
-                      child: const Text(
-                        'Cadastre-se',
-                        style: TextStyle(
-                          color: Color(0xff6003A2),
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w600,
+                    // Sign up button
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 28.0,
+                        right: 28.0,
+                        bottom: 38.0,
+                      ),
+                      child: DefaultButton(
+                        width: double.infinity,
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/signup');
+                        },
+                        borderRadius: BorderRadius.circular(100),
+                        child: const Text(
+                          'Cadastre-se',
+                          style: TextStyle(
+                            color: Color(0xff6003A2),
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  // withou login
-                  GestureDetector(
-                    onTap: () {
-                      // Navigator.of(context).pushNamed('/homepage');
-                      Navigator.pushReplacementNamed(context, '/homepage');
-                    },
-                    child: const Text(
-                      'Continuar sem uma conta',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Colors.white,
-                        fontSize: 16.0,
+                    // withou login
+                    GestureDetector(
+                      onTap: () {
+                        // Navigator.of(context).pushNamed('/homepage');
+                        Navigator.pushReplacementNamed(context, '/homepage');
+                      },
+                      child: const Text(
+                        'Continuar sem uma conta',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.white,
+                          fontSize: 16.0,
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ))
-              // default text
-
-              // const SizedBox(height: 175),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),
