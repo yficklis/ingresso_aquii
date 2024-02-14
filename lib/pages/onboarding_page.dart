@@ -59,7 +59,9 @@ class OnboardingPage extends StatelessWidget {
                     ),
                     child: GradientButton(
                       width: double.infinity,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/signin');
+                      },
                       borderRadius: BorderRadius.circular(100),
                       gradient: const LinearGradient(
                         colors: [
@@ -88,7 +90,9 @@ class OnboardingPage extends StatelessWidget {
                     ),
                     child: DefaultButton(
                       width: double.infinity,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/signup');
+                      },
                       borderRadius: BorderRadius.circular(100),
                       child: const Text(
                         'Cadastre-se',
@@ -104,7 +108,8 @@ class OnboardingPage extends StatelessWidget {
                   // withou login
                   GestureDetector(
                     onTap: () {
-                      print('clicou aqui');
+                      // Navigator.of(context).pushNamed('/homepage');
+                      Navigator.pushReplacementNamed(context, '/homepage');
                     },
                     child: const Text(
                       'Continuar sem uma conta',
