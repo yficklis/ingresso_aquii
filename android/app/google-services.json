@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "578780347386",
+    "project_id": "ingressoaquii-eb010",
+    "storage_bucket": "ingressoaquii-eb010.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578780347386:android:e4f1189697bb8f2606c243",
+        "android_client_info": {
+          "package_name": "com.example.ingresso_aquii"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvBQCpAzvkL43WlQr9I8TtwE03vhu8elE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578780347386:android:5280246f55176dcf06c243",
+        "android_client_info": {
+          "package_name": "com.ifyfi.ingressoaquii"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvBQCpAzvkL43WlQr9I8TtwE03vhu8elE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

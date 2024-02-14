@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:ingresso_aquii/pages/home_page.dart';
 import 'package:ingresso_aquii/pages/sign_in/sign_in_page.dart';
 import 'package:ingresso_aquii/pages/sign_up/sign_up_page.dart';
 import 'package:ingresso_aquii/pages/splash_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
