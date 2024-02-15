@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingresso_aquii/pages/auth_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ingresso_aquii/pages/home_page.dart';
@@ -32,9 +33,10 @@ class MyApp extends StatelessWidget {
         ),
         home: const SplashScreen(),
         routes: {
-          '/homepage': (context) => const HomePage(),
-          '/signin': (context) => SignInPage(),
+          '/homepage': (context) => HomePage(),
+          '/signin': (context) => const SignInPage(),
           '/signup': (context) => const SignUpPage(),
+          '/authpage': (context) => const AuthPage(),
         });
   }
 }

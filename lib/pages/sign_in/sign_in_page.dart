@@ -1,16 +1,69 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ingresso_aquii/pages/home_page.dart';
 import 'package:ingresso_aquii/util/default_textfield.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
 import 'package:ingresso_aquii/util/square_tile.dart';
 
-class SignInPage extends StatelessWidget {
-  SignInPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
 
-  void signUserIn() {}
+class _SignInPageState extends State<SignInPage> {
+  // text editing controllers
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  // sign user in method
+  Future signUserIn() async {
+    // show loading circle
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/homepage',
+        (Route<dynamic> route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      if (e.code != '') {
+        wrongEmailMessage();
+      }
+    }
+
+    // Navigator.pop(context);
+  }
+
+  void wrongEmailMessage() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text('E-mail ou senha Incorretos'),
+          );
+        });
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +102,7 @@ class SignInPage extends StatelessWidget {
 
                   // username textField
                   DefaultTextfield(
-                    controller: usernameController,
+                    controller: _emailController,
                     labelText: 'E-mail',
                     hintText: 'Digite aqui',
                     obscureText: false,
@@ -58,7 +111,7 @@ class SignInPage extends StatelessWidget {
                   const SizedBox(height: 10),
                   // password textField
                   DefaultTextfield(
-                    controller: passwordController,
+                    controller: _passwordController,
                     labelText: 'Senha',
                     hintText: 'Digite aqui',
                     obscureText: true,
