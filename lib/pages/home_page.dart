@@ -1,28 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ingresso_aquii/pages/onboarding_page.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home Page"),
-        actions: const [
-          IconButton(
-            onPressed: signUserOut,
-            icon: Icon(Icons.logout),
-          ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("Home Page"),
+          actions: [
+            IconButton(
+              onPressed: () async => {
+                FirebaseAuth.instance.signOut(),
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const OnboardingPage(),
+                    ),
+                    (route) => false)
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+        ),
+        body: Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text('Signed is as: ${user.email!}'),
+          ]),
+        ));
   }
-}
 
-Future signUserOut() async {
-  await FirebaseAuth.instance.signOut();
+  // Future signUserOut() async {
+  //   await FirebaseAuth.instance.signOut();
+  //   Navigator.of(context).pushAndRemoveUntil(
+  //       MaterialPageRoute(
+  //         builder: (context) => const OnboardingPage(),
+  //       ),
+  //       (route) => false);
+  // }
 }
