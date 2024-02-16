@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ingresso_aquii/util/default_button.dart';
@@ -11,6 +12,39 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
+  void signAsAnonymous() async {
+    try {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+      await FirebaseAuth.instance.signInAnonymously();
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/homepage',
+        (Route<dynamic> route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      switch (e.code) {
+        case "operation-not-allowed":
+          // print("Anonymous auth hasn't been enabled for this project.");
+          break;
+        default:
+        // print("Unknown error.");
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -83,7 +117,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       padding: const EdgeInsets.only(
                         left: 28.0,
                         right: 28.0,
-                        bottom: 38.0,
+                        bottom: 16.0,
                       ),
                       child: DefaultButton(
                         width: double.infinity,
@@ -102,25 +136,35 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                     ),
 
-                    // withou login
-                    GestureDetector(
-                      onTap: () {
-                        // Navigator.of(context).pushNamed('/homepage');
-                        Navigator.pushReplacementNamed(context, '/homepage');
-                      },
-                      child: const Text(
-                        'Continuar sem uma conta',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline,
-                          decorationColor: Colors.white,
-                          fontSize: 16.0,
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 28.0,
+                        right: 28.0,
+                        bottom: 38.0,
+                      ),
+                      child: DefaultButton(
+                        width: double.infinity,
+                        onPressed: () {
+                          signAsAnonymous();
+                        },
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(100),
+                        child: const Text(
+                          'Continuar sem uma conta',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Colors.white,
+                            fontSize: 16.0,
+                          ),
                         ),
                       ),
-                    )
+                    ),
+
+                    // withou login
                   ],
                 ),
               )

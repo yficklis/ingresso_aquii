@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text('Signed is as: ${user.email!}'),
+            Text('Signed is as: ${user.isAnonymous}'),
           ]),
         ));
   }

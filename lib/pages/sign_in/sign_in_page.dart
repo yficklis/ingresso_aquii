@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ingresso_aquii/pages/home_page.dart';
 import 'package:ingresso_aquii/util/default_textfield.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
 import 'package:ingresso_aquii/util/square_tile.dart';
@@ -23,6 +22,7 @@ class _SignInPageState extends State<SignInPage> {
     // show loading circle
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           return const Center(
             child: CircularProgressIndicator(),
@@ -30,7 +30,7 @@ class _SignInPageState extends State<SignInPage> {
         });
 
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
@@ -41,21 +41,32 @@ class _SignInPageState extends State<SignInPage> {
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       if (e.code != '') {
-        wrongEmailMessage();
+        showErrorMessage('E-mail ou senha Incorretos');
       }
     }
 
     // Navigator.pop(context);
   }
 
-  void wrongEmailMessage() {
+  void showErrorMessage(String message) {
     showDialog(
-        context: context,
-        builder: (context) {
-          return const AlertDialog(
-            title: Text('E-mail ou senha Incorretos'),
-          );
-        });
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              message,
+              style: const TextStyle(
+                color: Color(0xff260145),
+                fontSize: 16,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -77,7 +88,7 @@ class _SignInPageState extends State<SignInPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 25),
                   //Logo
                   SvgPicture.asset(
                     'assets/icons/iconLogo.svg',
@@ -85,7 +96,7 @@ class _SignInPageState extends State<SignInPage> {
                     width: 100,
                   ),
 
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 25),
 
                   // Default message
                   const Text(
@@ -106,6 +117,8 @@ class _SignInPageState extends State<SignInPage> {
                     labelText: 'E-mail',
                     hintText: 'Digite aqui',
                     obscureText: false,
+                    checkError: false,
+                    messageError: '',
                   ),
 
                   const SizedBox(height: 10),
@@ -115,6 +128,8 @@ class _SignInPageState extends State<SignInPage> {
                     labelText: 'Senha',
                     hintText: 'Digite aqui',
                     obscureText: true,
+                    checkError: false,
+                    messageError: '',
                   ),
 
                   const SizedBox(height: 10),
@@ -233,7 +248,7 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

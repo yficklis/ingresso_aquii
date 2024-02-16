@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class DefaultTextfield extends StatelessWidget {
+class TextfieldWithMask extends StatelessWidget {
   final dynamic controller;
+  final String maskInput;
   final String labelText;
   final String hintText;
   final bool obscureText;
   final bool checkError;
   final String messageError;
 
-  const DefaultTextfield({
+  const TextfieldWithMask({
     super.key,
     required this.controller,
+    required this.maskInput,
     required this.labelText,
     required this.hintText,
     required this.obscureText,
@@ -20,10 +23,12 @@ class DefaultTextfield extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final maskFormatter = MaskTextInputFormatter(mask: maskInput);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 28.0),
       child: TextField(
         controller: controller,
+        inputFormatters: [maskFormatter],
         obscureText: obscureText,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
