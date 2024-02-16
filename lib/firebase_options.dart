@@ -66,6 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '578780347386',
     projectId: 'ingressoaquii-eb010',
     storageBucket: 'ingressoaquii-eb010.appspot.com',
+    androidClientId: '578780347386-q1o35b9pbk2gnh6r1qtoofr75rmtindm.apps.googleusercontent.com',
+    iosClientId: '578780347386-7878pshdo0erftbco36itbpn8gpsdoab.apps.googleusercontent.com',
     iosBundleId: 'com.example.ingressoAquii',
   );
 
@@ -75,6 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '578780347386',
     projectId: 'ingressoaquii-eb010',
     storageBucket: 'ingressoaquii-eb010.appspot.com',
+    androidClientId: '578780347386-q1o35b9pbk2gnh6r1qtoofr75rmtindm.apps.googleusercontent.com',
+    iosClientId: '578780347386-6e86n1l5lgj3qps3puq4m6rcn7ojhvvv.apps.googleusercontent.com',
     iosBundleId: 'com.example.ingressoAquii.RunnerTests',
   );
 }

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ingresso_aquii/pages/onboarding_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
               onPressed: () async => {
+                await GoogleSignIn().signOut(),
                 FirebaseAuth.instance.signOut(),
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
