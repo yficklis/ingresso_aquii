@@ -43,7 +43,7 @@
 		</array>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
-		<key>UIApplicationSupportsIndirectInputEvents</key>
+		<key>UIApplicationSupportsIndirectInput  </key>
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>

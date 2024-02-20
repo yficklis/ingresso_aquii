@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ingresso_aquii/pages/sign_up/sign_up_confirm_page.dart';
 import 'package:ingresso_aquii/util/custom_dialog_widget.dart';
@@ -101,6 +102,43 @@ class _SignUpPageState extends State<SignUpPage> {
       );
       // Once signed in, return the UserCredential
       await FirebaseAuth.instance.signInWithCredential(credential);
+
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/homepage',
+        (Route<dynamic> route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      if (e.code != '') {
+        showErrorMessage('Algo deu errado:');
+      }
+    } catch (e) {
+      Navigator.pop(context);
+      print(e);
+    }
+  }
+
+  signInWithFacebook() async {
+    try {
+      // Trigger the sign-in flow
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      // Create a credential from the access token
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+
+      // Once signed in, return the UserCredential
+      return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/homepage',
@@ -272,7 +310,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                       GestureDetector(
                         onTap: () {
-                          print('tá aqui');
+                          signInWithFacebook();
                         },
                         child: const SquareTile(
                             imagePath: 'assets/icons/facebook-colorful.svg'),
