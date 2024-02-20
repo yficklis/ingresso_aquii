@@ -99,43 +99,6 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
-  signInWithFacebook() async {
-    try {
-      // Trigger the sign-in flow
-      final LoginResult loginResult = await FacebookAuth.instance.login();
-
-      // Create a credential from the access token
-      final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(loginResult.accessToken!.token);
-
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
-
-      // Once signed in, return the UserCredential
-      return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        '/homepage',
-        (Route<dynamic> route) => false,
-      );
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
-      if (e.code != '') {
-        showErrorMessage('Algo deu errado:');
-      }
-    } catch (e) {
-      Navigator.pop(context);
-      print(e);
-    }
-  }
-
   void showErrorMessage(String message) {
     showDialog(
       context: context,
@@ -300,16 +263,16 @@ class _SignInPageState extends State<SignInPage> {
                             imagePath: 'assets/icons/google-colorful.svg'),
                       ),
 
-                      const SizedBox(width: 10),
-                      // facebook button
+                      // const SizedBox(width: 10),
+                      // // facebook button
 
-                      GestureDetector(
-                        onTap: () {
-                          signInWithFacebook();
-                        },
-                        child: const SquareTile(
-                            imagePath: 'assets/icons/facebook-colorful.svg'),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     signInWithFacebook();
+                      //   },
+                      //   child: const SquareTile(
+                      //       imagePath: 'assets/icons/facebook-colorful.svg'),
+                      // ),
                     ],
                   ),
 
