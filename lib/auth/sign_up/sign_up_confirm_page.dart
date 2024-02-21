@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -51,13 +52,16 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
     );
 
     try {
+      // create user
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: widget.data['_emailController'].text.trim(),
         password: _passwordController.text.trim(),
       );
 
+      // add user details
+      addUserDetails();
       Navigator.of(context).pushNamedAndRemoveUntil(
-        '/signin',
+        '/homepage',
         (Route<dynamic> route) => false,
       );
     } on FirebaseAuthException catch (e) {
@@ -66,10 +70,27 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
         showErrorMessage('A senha fornecida é muito fraca.');
       } else if (e.code == 'email-already-in-use') {
         showErrorMessage('A conta já existe para esse e-mail.');
+      } else if (e.code == 'invalid-email') {
+        showErrorMessage(
+          'O endereço de e-mail está mal formatado ou já existe.',
+        );
       }
     } catch (e) {
       Navigator.pop(context);
-      print(e);
+    }
+  }
+
+  Future addUserDetails() async {
+    try {
+      await FirebaseFirestore.instance.collection('users').add({
+        'first_name': widget.data['_nameController'].text.trim(),
+        'cpf': widget.data['_documentIdController'].text.trim(),
+        'birth': widget.data['_birthController'].text.trim(),
+      });
+    } on FirebaseException catch (e) {
+      print("Failed with error '${e.code}': ${e.message}");
+    } catch (e) {
+      print("Failed with error catch '${e}'");
     }
   }
 

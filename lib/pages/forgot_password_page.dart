@@ -52,6 +52,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       },
     );
     try {
+      // await FirebaseAuth.instance.currentUser.updatePassword(newPassword)
       await FirebaseAuth.instance
           .sendPasswordResetEmail(
             email: _emailController.text.trim(),
