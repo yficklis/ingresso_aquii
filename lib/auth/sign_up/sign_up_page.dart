@@ -1,61 +1,78 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ingresso_aquii/auth/sign_up/sign_up_confirm_page.dart';
 import 'package:ingresso_aquii/util/default_textfield.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
 import 'package:ingresso_aquii/util/square_tile.dart';
+import 'package:ingresso_aquii/util/textfield_with_mask.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
-  // text editing controllers
+class _SignUpPageState extends State<SignUpPage> {
+  // text create controllers
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _documentIdController = TextEditingController();
+  final _birthController = TextEditingController();
 
-  // sign user in method
-  Future signUserIn() async {
-    // show loading circle
+  // message error text field
+  final String messageError = 'Por favor preencha novamente!';
+
+  void showErrorMessage(String message) {
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        });
-
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        '/homepage',
-        (Route<dynamic> route) => false,
-      );
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
-      if (e.code != '') {
-        showErrorMessage('E-mail ou senha Incorretos');
-      }
-    }
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              message,
+              style: const TextStyle(
+                color: Color(0xff260145),
+                fontSize: 16,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
-  // void _handleGoogleSignIn() {
-  //   try {
-  //     GoogleAuthProvider googleAtuhProvider = GoogleAuthProvider();
-  //     FirebaseAuth.instance.signInWithProvider(googleAtuhProvider);
-  //   } catch (error) {
-  //     print(error);
-  //   }
-  // }
+  // validating text input
+  void signUpNextStep() {
+    Map controllerList = {
+      '_nameController': _nameController,
+      '_emailController': _emailController,
+      '_documentIdController': _documentIdController,
+      '_birthController': _birthController,
+    };
+    int count = 0;
+    for (final value in controllerList.values) {
+      if (value.text.isEmpty) {
+        count++;
+      }
+    }
+
+    if (count > 0) {
+      showErrorMessage('Preencha todos os campos!');
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SignUpConfirmPage(data: controllerList),
+      ),
+    );
+  }
 
   signInWithGoogle() async {
     try {
@@ -99,31 +116,12 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
-  void showErrorMessage(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Center(
-            child: Text(
-              message,
-              style: const TextStyle(
-                color: Color(0xff260145),
-                fontSize: 16,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
-    _passwordController.dispose();
+    _documentIdController.dispose();
+    _birthController.dispose();
     super.dispose();
   }
 
@@ -151,7 +149,7 @@ class _SignInPageState extends State<SignInPage> {
 
                   // Default message
                   const Text(
-                    "Bem-vindo de volta, sentimos sua falta!",
+                    "Bem-vindo, vamos começar!",
                     style: TextStyle(
                       color: Color(0xff260145),
                       fontSize: 16,
@@ -164,55 +162,60 @@ class _SignInPageState extends State<SignInPage> {
 
                   // username textField
                   DefaultTextfield(
-                    controller: _emailController,
-                    labelText: 'E-mail',
+                    controller: _nameController,
+                    labelText: 'Nome',
                     hintText: 'Digite aqui',
                     obscureText: false,
                     checkError: false,
-                    messageError: '',
+                    messageError: messageError,
                   ),
 
                   const SizedBox(height: 10),
                   // password textField
                   DefaultTextfield(
-                    controller: _passwordController,
-                    labelText: 'Senha',
+                    controller: _emailController,
+                    labelText: 'E-mail',
                     hintText: 'Digite aqui',
-                    obscureText: true,
+                    obscureText: false,
                     checkError: false,
-                    messageError: '',
+                    messageError: messageError,
                   ),
 
                   const SizedBox(height: 10),
 
-                  //forgot password
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "Esqueceu sua senha?",
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
-                            fontSize: 16.0,
-                          ),
-                        )
-                      ],
-                    ),
+                  TextfieldWithMask(
+                    controller: _documentIdController,
+                    labelText: 'CPF',
+                    hintText: 'Digite aqui',
+                    obscureText: false,
+                    maskInput: "###.###.###-##",
+                    checkError: false,
+                    messageError: messageError,
                   ),
+
+                  const SizedBox(height: 10),
+                  // password textField
+                  TextfieldWithMask(
+                    controller: _birthController,
+                    labelText: 'Data de nascimento',
+                    hintText: 'Digite aqui',
+                    obscureText: false,
+                    maskInput: "##/##/####",
+                    checkError: false,
+                    messageError: messageError,
+                  ),
+
+                  const SizedBox(height: 10),
 
                   // sign in button
                   Padding(
                     padding: const EdgeInsets.all(28.0),
                     child: GradientButton(
                       width: double.infinity,
-                      onPressed: signUserIn,
+                      onPressed: signUpNextStep,
                       borderRadius: BorderRadius.circular(100),
                       child: const Text(
-                        'Entre',
+                        'Próximo',
                         style: TextStyle(
                           color: Color(0xffFEFEFE),
                           fontFamily: 'Roboto',
@@ -262,17 +265,6 @@ class _SignInPageState extends State<SignInPage> {
                         child: const SquareTile(
                             imagePath: 'assets/icons/google-colorful.svg'),
                       ),
-
-                      // const SizedBox(width: 10),
-                      // // facebook button
-
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     signInWithFacebook();
-                      //   },
-                      //   child: const SquareTile(
-                      //       imagePath: 'assets/icons/facebook-colorful.svg'),
-                      // ),
                     ],
                   ),
 
@@ -283,7 +275,7 @@ class _SignInPageState extends State<SignInPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Não possui conta?',
+                          'Já possui conta?',
                           style: TextStyle(
                             color: Color(0xff363435),
                             fontSize: 16,
@@ -294,10 +286,10 @@ class _SignInPageState extends State<SignInPage> {
                         const SizedBox(width: 4),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacementNamed(context, '/signup');
+                            Navigator.pushReplacementNamed(context, '/signin');
                           },
                           child: const Text(
-                            'Cadastre-se',
+                            'Entre',
                             style: TextStyle(
                               fontFamily: 'Inter',
                               color: Color(0xff260145),
@@ -310,7 +302,7 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

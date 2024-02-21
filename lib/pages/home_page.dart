@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:ingresso_aquii/pages/HallPage.dart';
+import 'package:ingresso_aquii/pages/hall_page.dart';
 import 'package:ingresso_aquii/pages/my_tickets.dart';
 import 'package:ingresso_aquii/pages/onboarding_page.dart';
 import 'package:ingresso_aquii/pages/shopping_cart.dart';
@@ -21,15 +21,12 @@ class _HomePageState extends State<HomePage> {
   final items = <Widget>[
     const Icon(
       Icons.local_activity,
-      // color: Color(0xffFEFAFF),
     ),
     const Icon(
       Icons.home,
-      // color: Color(0xffFEFAFF),
     ),
     const Icon(
       Icons.shopping_cart,
-      // color: Color(0xffFEFAFF),
     ),
   ];
 
@@ -84,22 +81,8 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           body: currentPage[activePage],
-          // Center(
-          //   child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          //     Text('Signed is as: ${user.isAnonymous}'),
-          //   ]),
-          // ),
         ),
       ),
     );
   }
-
-  // Future signUserOut() async {
-  //   await FirebaseAuth.instance.signOut();
-  //   Navigator.of(context).pushAndRemoveUntil(
-  //       MaterialPageRoute(
-  //         builder: (context) => const OnboardingPage(),
-  //       ),
-  //       (route) => false);
-  // }
 }

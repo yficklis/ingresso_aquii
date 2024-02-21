@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ingresso_aquii/util/default_textfield.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
 import 'package:ingresso_aquii/util/square_tile.dart';
@@ -100,12 +101,58 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
     );
   }
 
+  signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+      // Once signed in, return the UserCredential
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/homepage',
+        (Route<dynamic> route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      if (e.code != '') {
+        showErrorMessage('Algo deu errado:');
+      }
+    } catch (e) {
+      Navigator.pop(context);
+      print(e);
+    }
+  }
+
   bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+        ),
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -235,18 +282,17 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                     ),
                     const SizedBox(height: 50),
                     // google + facebook sign in buttons
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // google button
-                        SquareTile(
-                            imagePath: 'assets/icons/google-colorful.svg'),
-
-                        SizedBox(width: 10),
-                        // facebook button
-
-                        SquareTile(
-                            imagePath: 'assets/icons/facebook-colorful.svg'),
+                        GestureDetector(
+                          onTap: () {
+                            signInWithGoogle();
+                          },
+                          child: const SquareTile(
+                              imagePath: 'assets/icons/google-colorful.svg'),
+                        ),
                       ],
                     ),
 

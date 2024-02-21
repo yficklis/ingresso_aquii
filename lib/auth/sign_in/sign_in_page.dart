@@ -1,79 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ingresso_aquii/pages/sign_up/sign_up_confirm_page.dart';
-import 'package:ingresso_aquii/util/custom_dialog_widget.dart';
 import 'package:ingresso_aquii/util/default_textfield.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
 import 'package:ingresso_aquii/util/square_tile.dart';
-import 'package:ingresso_aquii/util/textfield_with_mask.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  // text create controllers
-  final _nameController = TextEditingController();
+class _SignInPageState extends State<SignInPage> {
+  // text editing controllers
   final _emailController = TextEditingController();
-  final _documentIdController = TextEditingController();
-  final _birthController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  // message error text field
-  final String messageError = 'Por favor preencha novamente!';
-
-  void showErrorMessage(String message) {
+  // sign user in method
+  Future signUserIn() async {
+    // show loading circle
     showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Center(
-            child: Text(
-              message,
-              style: const TextStyle(
-                color: Color(0xff260145),
-                fontSize: 16,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
 
-  // validating text input
-  void signUpNextStep() {
-    Map controllerList = {
-      '_nameController': _nameController,
-      '_emailController': _emailController,
-      '_documentIdController': _documentIdController,
-      '_birthController': _birthController,
-    };
-    int count = 0;
-    for (final value in controllerList.values) {
-      if (value.text.isEmpty) {
-        count++;
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/homepage',
+        (Route<dynamic> route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      if (e.code != '') {
+        showErrorMessage('E-mail ou senha Incorretos');
       }
     }
-
-    if (count > 0) {
-      showErrorMessage('Preencha todos os campos!');
-      return;
-    }
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SignUpConfirmPage(data: controllerList),
-      ),
-    );
   }
 
   signInWithGoogle() async {
@@ -118,12 +89,31 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
+  void showErrorMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              message,
+              style: const TextStyle(
+                color: Color(0xff260145),
+                fontSize: 16,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
-    _nameController.dispose();
     _emailController.dispose();
-    _documentIdController.dispose();
-    _birthController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -151,7 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   // Default message
                   const Text(
-                    "Bem-vindo, vamos começar!",
+                    "Bem-vindo de volta, sentimos sua falta!",
                     style: TextStyle(
                       color: Color(0xff260145),
                       fontSize: 16,
@@ -164,60 +154,55 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   // username textField
                   DefaultTextfield(
-                    controller: _nameController,
-                    labelText: 'Nome',
-                    hintText: 'Digite aqui',
-                    obscureText: false,
-                    checkError: false,
-                    messageError: messageError,
-                  ),
-
-                  const SizedBox(height: 10),
-                  // password textField
-                  DefaultTextfield(
                     controller: _emailController,
                     labelText: 'E-mail',
                     hintText: 'Digite aqui',
                     obscureText: false,
                     checkError: false,
-                    messageError: messageError,
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  TextfieldWithMask(
-                    controller: _documentIdController,
-                    labelText: 'CPF',
-                    hintText: 'Digite aqui',
-                    obscureText: false,
-                    maskInput: "###.###.###-##",
-                    checkError: false,
-                    messageError: messageError,
+                    messageError: '',
                   ),
 
                   const SizedBox(height: 10),
                   // password textField
-                  TextfieldWithMask(
-                    controller: _birthController,
-                    labelText: 'Data de nascimento',
+                  DefaultTextfield(
+                    controller: _passwordController,
+                    labelText: 'Senha',
                     hintText: 'Digite aqui',
-                    obscureText: false,
-                    maskInput: "##/##/####",
+                    obscureText: true,
                     checkError: false,
-                    messageError: messageError,
+                    messageError: '',
                   ),
 
                   const SizedBox(height: 10),
+
+                  //forgot password
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Esqueceu sua senha?",
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            decoration: TextDecoration.underline,
+                            decorationColor: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
 
                   // sign in button
                   Padding(
                     padding: const EdgeInsets.all(28.0),
                     child: GradientButton(
                       width: double.infinity,
-                      onPressed: signUpNextStep,
+                      onPressed: signUserIn,
                       borderRadius: BorderRadius.circular(100),
                       child: const Text(
-                        'Próximo',
+                        'Entre',
                         style: TextStyle(
                           color: Color(0xffFEFEFE),
                           fontFamily: 'Roboto',
@@ -267,17 +252,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: const SquareTile(
                             imagePath: 'assets/icons/google-colorful.svg'),
                       ),
-
-                      // const SizedBox(width: 10),
-                      // // facebook button
-
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     signInWithFacebook();
-                      //   },
-                      //   child: const SquareTile(
-                      //       imagePath: 'assets/icons/facebook-colorful.svg'),
-                      // ),
                     ],
                   ),
 
@@ -288,7 +262,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Já possui conta?',
+                          'Não possui conta?',
                           style: TextStyle(
                             color: Color(0xff363435),
                             fontSize: 16,
@@ -299,10 +273,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         const SizedBox(width: 4),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacementNamed(context, '/signin');
+                            Navigator.pushReplacementNamed(context, '/signup');
                           },
                           child: const Text(
-                            'Entre',
+                            'Cadastre-se',
                             style: TextStyle(
                               fontFamily: 'Inter',
                               color: Color(0xff260145),
@@ -315,7 +289,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

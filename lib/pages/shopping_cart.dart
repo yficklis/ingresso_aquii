@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingCart extends StatefulWidget {
@@ -8,11 +9,13 @@ class ShoppingCart extends StatefulWidget {
 }
 
 class _ShoppingCartState extends State<ShoppingCart> {
+  final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text("Shopping cart"),
+        child:
+            Text("Shopping cart - Signed is  Anonymous: ${user.isAnonymous}"),
       ),
     );
   }

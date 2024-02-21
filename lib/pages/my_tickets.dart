@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyTickets extends StatefulWidget {
@@ -8,11 +9,12 @@ class MyTickets extends StatefulWidget {
 }
 
 class _MyTicketsState extends State<MyTickets> {
+  final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text("Tickets Page"),
+        child: Text("Tickets Page - Signed is  Anonymous: ${user.isAnonymous}"),
       ),
     );
   }

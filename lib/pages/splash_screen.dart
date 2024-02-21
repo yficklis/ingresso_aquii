@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ingresso_aquii/pages/auth_page.dart';
+import 'package:ingresso_aquii/auth/auth_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
