@@ -5,6 +5,7 @@ import 'package:ingresso_aquii/pages/hall_page.dart';
 import 'package:ingresso_aquii/pages/my_tickets.dart';
 import 'package:ingresso_aquii/pages/shopping_cart.dart';
 import 'package:ingresso_aquii/util/custom_app_bar.dart';
+import 'package:ingresso_aquii/util/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -61,7 +62,10 @@ class _HomePageState extends State<HomePage> {
               onTap: (index) => setState(() => activePage = index),
             ),
           ),
-          appBar: CustomAppBar(),
+          appBar: CustomAppBar(
+            title: '',
+          ),
+          drawer: CustomDrawer(),
           body: currentPage[activePage],
         ),
       ),

@@ -4,7 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ingresso_aquii/pages/onboarding_page.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  CustomAppBar({Key? key})
+  final String title;
+  CustomAppBar({Key? key, required this.title})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -19,7 +20,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // title: const Text("Home Page"),
+      title: Text(widget.title),
       actions: [
         IconButton(
           onPressed: () async => {

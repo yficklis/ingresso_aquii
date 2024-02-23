@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ingresso_aquii/auth/auth_page.dart';
 import 'package:ingresso_aquii/pages/my_tickets.dart';
 import 'package:ingresso_aquii/pages/shopping_cart.dart';
+import 'package:ingresso_aquii/pages/suport_page.dart';
+import 'package:ingresso_aquii/pages/update_password_page.dart';
+import 'package:ingresso_aquii/pages/update_profile_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ingresso_aquii/pages/home_page.dart';
@@ -41,6 +44,9 @@ class MyApp extends StatelessWidget {
           '/authpage': (context) => const AuthPage(),
           '/mytickets': (context) => const MyTickets(),
           '/shoppingcart': (context) => const ShoppingCart(),
+          '/suportpage': (context) => const SuportPage(),
+          '/updatepassword': (context) => const UpdatePasswordPage(),
+          '/updateprofile': (context) => const UpdateProfilePage(),
         });
   }
 }

@@ -1,0 +1,142 @@
+{
+  "cinemas": {
+    "ID1": {
+      "unidade": "Praia Grande",
+      "tipo": "regional",
+      "status": true,
+      "lotes": {
+        "32018": {
+          "validade": "30/06/2024",
+          "status": true,
+          "cliente": "INGRESSOAQUI",
+          "ingressos": {
+            "000KDQQM3": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "000TU0VBD": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "0017NDM20": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            }
+          },
+          "combos": {
+            "00232FY9F": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "002HM2PLH": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "003TVJSPG": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            }
+          }
+        }
+      }
+    },
+    "ID2": {
+      "unidade": "São Vicente",
+      "tipo": "regional",
+      "status": true,
+      "lotes": {
+        "32019": {
+          "validade": "30/07/2024",
+          "status": true,
+          "cliente": "INGRESSOAQUI",
+          "ingressos": {
+            "004833GTD": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "0052FXJPG": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "005P1MKFS": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            }
+          },
+          "combos": {
+            "005S13Q7A": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "005VF8TYW": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "007ZETMNQ": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            }
+          }
+        }
+      }
+    },
+    "ID3": {
+      "unidade": "unidade nascional",
+      "tipo": "nascional",
+      "status": true,
+      "lotes": {
+        "32020": {
+          "validade": "30/08/2024",
+          "status": true,
+          "cliente": "INGRESSOAQUI",
+          "ingressos": {
+            "00A2X1W4S": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "00BG3GK9A": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "00BH54L69": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            }
+          },
+          "combos": {
+            "00BP6FMWU": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "00C7QBJ33": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            },
+            "00CK1WKDE": {
+              "status": true,
+              "reembolso": false,
+              "vendido": false
+            }
+          }
+        }
+      }
+    }
+  }
+}
