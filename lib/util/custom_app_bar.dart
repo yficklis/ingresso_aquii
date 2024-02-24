@@ -21,20 +21,20 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(widget.title),
-      actions: [
-        IconButton(
-          onPressed: () async => {
-            await GoogleSignIn().signOut(),
-            FirebaseAuth.instance.signOut(),
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => const OnboardingPage(),
-                ),
-                (route) => false)
-          },
-          icon: const Icon(Icons.logout),
-        ),
-      ],
+      // actions: [
+      //   IconButton(
+      //     onPressed: () async => {
+      //       await GoogleSignIn().signOut(),
+      //       FirebaseAuth.instance.signOut(),
+      //       Navigator.of(context).pushAndRemoveUntil(
+      //           MaterialPageRoute(
+      //             builder: (context) => const OnboardingPage(),
+      //           ),
+      //           (route) => false)
+      //     },
+      //     icon: const Icon(Icons.logout),
+      //   ),
+      // ],
     );
   }
 }

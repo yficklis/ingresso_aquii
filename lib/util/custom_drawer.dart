@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ingresso_aquii/pages/onboarding_page.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -99,29 +102,62 @@ class CustomDrawer extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 25),
-            child: ListTile(
-              leading: Icon(
-                Icons.help,
-                color: Colors.grey[800],
-              ),
-              title: Text(
-                'S U P O R T E',
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  color: Colors.grey[800],
-                  fontWeight: FontWeight.w600,
-                  decorationColor: Colors.grey[800],
-                  fontSize: 16.0,
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 0),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.help,
+                    color: Colors.grey[800],
+                  ),
+                  title: Text(
+                    'S U P O R T E',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.w600,
+                      decorationColor: Colors.grey[800],
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/suportpage');
+                  },
                 ),
               ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/suportpage');
-              },
-            ),
-          ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 25),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.grey[800],
+                  ),
+                  title: Text(
+                    'S A I R',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.w600,
+                      decorationColor: Colors.grey[800],
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  onTap: () async => {
+                    Navigator.pop(context),
+                    await GoogleSignIn().signOut(),
+                    FirebaseAuth.instance.signOut(),
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => const OnboardingPage(),
+                        ),
+                        (route) => false)
+                  },
+                ),
+              )
+            ],
+          )
         ],
       ),
     );
