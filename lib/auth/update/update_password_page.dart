@@ -18,7 +18,6 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
   final _newPasswordController = TextEditingController();
   final _newPasswordControllerConfirm = TextEditingController();
 
-  final auth = FirebaseAuth.instance;
   final currentUser = FirebaseAuth.instance.currentUser!;
 
   void changePasswordMethod() async {
@@ -70,7 +69,8 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
       Navigator.pop(context);
       if (e.code != '') {
         showErrorMessage(
-            'A senha atual de autenticação fornecida está incorreta..');
+          'A senha atual de autenticação fornecida está incorreta..',
+        );
       }
     } catch (e) {
       Navigator.pop(context);

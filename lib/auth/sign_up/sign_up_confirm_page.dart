@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ingresso_aquii/util/default_textfield.dart';
@@ -246,13 +247,15 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                             });
                           },
                         ),
-                        Text(
-                          "Li e concordo com a Política de Privacidade.",
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
-                            fontSize: 16.0,
+                        Expanded(
+                          child: Text(
+                            "Li e concordo com a Política de Privacidade.",
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
+                              fontSize: 16.0,
+                            ),
                           ),
                         )
                       ],
@@ -305,7 +308,7 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 25),
                   // google + facebook sign in buttons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -323,7 +326,7 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
 
                   // not a member? register now
                   Padding(
-                    padding: const EdgeInsets.only(top: 50.0),
+                    padding: const EdgeInsets.only(top: 25.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
