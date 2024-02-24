@@ -95,7 +95,7 @@ class CustomDrawer extends StatelessWidget {
                     ),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, '/updatepassword');
+                      Navigator.pushNamed(context, '/deleteaccount');
                     },
                   ),
                 ],

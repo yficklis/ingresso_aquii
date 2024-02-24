@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,31 +7,22 @@ import 'package:ingresso_aquii/util/custom_app_bar.dart';
 import 'package:ingresso_aquii/util/default_textfield.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
 
-class UpdatePasswordPage extends StatefulWidget {
-  const UpdatePasswordPage({super.key});
+class DeleteAccountPage extends StatefulWidget {
+  const DeleteAccountPage({super.key});
 
   @override
-  State<UpdatePasswordPage> createState() => _UpdatePasswordPageState();
+  State<DeleteAccountPage> createState() => _DeleteAccountPageState();
 }
 
-class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
+class _DeleteAccountPageState extends State<DeleteAccountPage> {
   final _passwordController = TextEditingController();
-  final _newPasswordController = TextEditingController();
-  final _newPasswordControllerConfirm = TextEditingController();
 
   final auth = FirebaseAuth.instance;
   final currentUser = FirebaseAuth.instance.currentUser!;
 
-  void changePasswordMethod() async {
-    if (_passwordController.text.isEmpty ||
-        _newPasswordController.text.isEmpty) {
-      showErrorMessage('Preencha todos os campos.');
-      return;
-    }
-
-    if (_newPasswordController.text.trim() !=
-        _newPasswordControllerConfirm.text.trim()) {
-      showErrorMessage('As senhas devem ser iguais.');
+  void deleteAccountByPasswordMethod() async {
+    if (_passwordController.text.isEmpty) {
+      showErrorMessage('Preencha a senha atual.');
       return;
     }
 
@@ -52,8 +44,12 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
 
       await currentUser.reauthenticateWithCredential(credential).then(
         (value) async {
-          currentUser.updatePassword(_newPasswordController.text.trim()).then(
-            (_) {
+          await currentUser.delete().then(
+            (_) async {
+              await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(currentUser.uid)
+                  .delete();
               Navigator.of(context).pushNamedAndRemoveUntil(
                 '/signin',
                 (Route<dynamic> route) => false,
@@ -70,7 +66,8 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
       Navigator.pop(context);
       if (e.code != '') {
         showErrorMessage(
-            'A senha atual de autenticação fornecida está incorreta..');
+          'A senha atual de autenticação fornecida está incorreta..',
+        );
       }
     } catch (e) {
       Navigator.pop(context);
@@ -101,8 +98,6 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
 
   @override
   void dispose() {
-    _newPasswordController.dispose();
-    _newPasswordControllerConfirm.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -132,7 +127,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 Padding(
                   padding: const EdgeInsets.all(28.0),
                   child: Text(
-                    'Vamos atualizar a sua senha. Favor insira abaixo o seu os dados necessários.',
+                    'Poxa é uma pena, e lembrando que todos os seus dados de comprar serão deletas.\n Favor insira abaixo o seu os dados necessários.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
@@ -152,8 +147,8 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
 
                 //forgot password
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 28.0, vertical: 16.0),
+                  padding:
+                      const EdgeInsets.only(left: 28.0, right: 28.0, top: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -183,33 +178,14 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                     ],
                   ),
                 ),
-                DefaultTextfield(
-                  controller: _newPasswordController,
-                  labelText: 'Nova Senha',
-                  hintText: 'Digite aqui',
-                  obscureText: true,
-                  checkError: false,
-                  messageError: '',
-                ),
-
-                const SizedBox(height: 16),
-
-                DefaultTextfield(
-                  controller: _newPasswordControllerConfirm,
-                  labelText: 'Confirme sua senha',
-                  hintText: 'Digite aqui',
-                  obscureText: true,
-                  checkError: false,
-                  messageError: '',
-                ),
                 Padding(
                   padding: const EdgeInsets.all(28.0),
                   child: GradientButton(
                     width: double.infinity,
-                    onPressed: changePasswordMethod,
+                    onPressed: deleteAccountByPasswordMethod,
                     borderRadius: BorderRadius.circular(100),
                     child: const Text(
-                      'Alterar senha',
+                      'Deletar conta',
                       style: TextStyle(
                         color: Color(0xffFEFEFE),
                         fontFamily: 'Roboto',
