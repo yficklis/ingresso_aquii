@@ -45,7 +45,7 @@ class _HallPageState extends State<HallPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Hall Page - Signed is Anonymous: ${user}'),
+            Text('Hall Page - Signed is Anonymous: ${user.isAnonymous}'),
             Expanded(
               child: FutureBuilder(
                 future: getDocId(),

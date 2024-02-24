@@ -75,6 +75,26 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.pushNamed(context, '/updatepassword');
                     },
                   ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.person_off,
+                      color: Colors.grey[800],
+                    ),
+                    title: Text(
+                      'Excluir conta',
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.w600,
+                        decorationColor: Colors.grey[800],
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/updatepassword');
+                    },
+                  ),
                 ],
               ),
             ],
