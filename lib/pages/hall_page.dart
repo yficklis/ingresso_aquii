@@ -34,7 +34,7 @@ class _HallPageState extends State<HallPage> {
 
   // @override
   // void initState() {
-  //   getDocId();
+  //   print(user);
   //   super.initState();
   // }
 
@@ -45,7 +45,7 @@ class _HallPageState extends State<HallPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Hall Page - Signed is Anonymous: ${user.isAnonymous}'),
+            Text('Hall Page - Signed is Anonymous: ${user}'),
             Expanded(
               child: FutureBuilder(
                 future: getDocId(),

@@ -53,13 +53,14 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
 
     try {
       // create user
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential? userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: widget.data['_emailController'].text.trim(),
         password: _passwordController.text.trim(),
       );
 
       // add user details
-      addUserDetails();
+      addUserDetails(userCredential);
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/homepage',
         (Route<dynamic> route) => false,
@@ -80,17 +81,22 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
     }
   }
 
-  Future addUserDetails() async {
-    try {
-      await FirebaseFirestore.instance.collection('users').add({
-        'first_name': widget.data['_nameController'].text.trim(),
-        'cpf': widget.data['_documentIdController'].text.trim(),
-        'birth': widget.data['_birthController'].text.trim(),
-      });
-    } on FirebaseException catch (e) {
-      print("Failed with error '${e.code}': ${e.message}");
-    } catch (e) {
-      print("Failed with error catch '${e}'");
+  Future<void> addUserDetails(UserCredential? userCredential) async {
+    if (userCredential != null && userCredential.user != null) {
+      try {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+          'first_name': widget.data['_nameController'].text.trim(),
+          'cpf': widget.data['_documentIdController'].text.trim(),
+          'birth': widget.data['_birthController'].text.trim(),
+        });
+      } on FirebaseException catch (e) {
+        print("Failed with error '${e.code}': ${e.message}");
+      } catch (e) {
+        print("Failed with error catch '${e}'");
+      }
     }
   }
 
