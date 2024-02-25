@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ingresso_aquii/util/custom_app_bar.dart';
 
 class MyTickets extends StatefulWidget {
   const MyTickets({super.key});
@@ -13,6 +14,7 @@ class _MyTicketsState extends State<MyTickets> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(title: ''),
       body: Center(
         child: Text("Tickets Page - Signed is  Anonymous: ${user.isAnonymous}"),
       ),
