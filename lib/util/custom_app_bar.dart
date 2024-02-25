@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:ingresso_aquii/pages/onboarding_page.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:ingresso_aquii/pages/onboarding_page.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
