@@ -7,6 +7,7 @@ class DefaultTextfield extends StatelessWidget {
   final bool obscureText;
   final bool checkError;
   final String messageError;
+  final dynamic contentPadding;
 
   const DefaultTextfield({
     super.key,
@@ -16,6 +17,7 @@ class DefaultTextfield extends StatelessWidget {
     required this.obscureText,
     required this.checkError,
     required this.messageError,
+    this.contentPadding,
   });
 
   @override
@@ -45,6 +47,7 @@ class DefaultTextfield extends StatelessWidget {
           labelText: labelText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           errorText: checkError ? messageError : null,
+          contentPadding: contentPadding ?? null,
         ),
       ),
     );
