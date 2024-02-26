@@ -1,7 +1,5 @@
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:ingresso_aquii/pages/onboarding_page.dart';
+import 'package:ingresso_aquii/pages/my_tickets.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -21,20 +19,18 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(widget.title),
-      // actions: [
-      //   IconButton(
-      //     onPressed: () async => {
-      //       await GoogleSignIn().signOut(),
-      //       FirebaseAuth.instance.signOut(),
-      //       Navigator.of(context).pushAndRemoveUntil(
-      //           MaterialPageRoute(
-      //             builder: (context) => const OnboardingPage(),
-      //           ),
-      //           (route) => false)
-      //     },
-      //     icon: const Icon(Icons.logout),
-      //   ),
-      // ],
+      actions: [
+        Padding(
+          padding: EdgeInsets.only(right: 16),
+          child: IconButton(
+            onPressed: () async => Navigator.pushNamed(context, '/mytickets'),
+            icon: const Icon(
+              Icons.local_activity,
+              size: 34,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

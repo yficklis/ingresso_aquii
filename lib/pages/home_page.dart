@@ -6,6 +6,7 @@ import 'package:ingresso_aquii/pages/my_tickets.dart';
 import 'package:ingresso_aquii/pages/shopping_cart.dart';
 import 'package:ingresso_aquii/util/custom_app_bar.dart';
 import 'package:ingresso_aquii/util/custom_drawer.dart';
+import 'package:ingresso_aquii/util/custom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,25 +18,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser!;
 
-  final items = <Widget>[
-    const Icon(
-      Icons.local_activity,
-    ),
-    const Icon(
-      Icons.home,
-    ),
-    const Icon(
-      Icons.shopping_cart,
-    ),
-  ];
+  // navigate bottom bar
+  int selectedIndex = 0;
+  void navigateBottomBar(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
-  List<dynamic> currentPage = [
-    const MyTickets(),
-    const HallPage(),
-    const ShoppingCart()
-  ];
+  final List<Widget> currentPage = [
+    // shop page
+    HallPage(),
 
-  int activePage = 1;
+    // cart page
+    ShoppingCart()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,28 +42,14 @@ class _HomePageState extends State<HomePage> {
         top: false,
         child: Scaffold(
           extendBody: true,
-          bottomNavigationBar: Theme(
-            data: Theme.of(context).copyWith(
-              iconTheme: const IconThemeData(
-                color: Color(0xffFEFAFF),
-              ),
-            ),
-            child: CurvedNavigationBar(
-              backgroundColor: Colors.transparent,
-              color: Colors.deepPurple.shade200,
-              height: 70,
-              animationCurve: Curves.easeInOut,
-              animationDuration: const Duration(milliseconds: 350),
-              index: activePage,
-              items: items,
-              onTap: (index) => setState(() => activePage = index),
-            ),
+          bottomNavigationBar: CustomNavBar(
+            onTabChange: (index) => navigateBottomBar(index),
           ),
           appBar: CustomAppBar(
             title: '',
           ),
           drawer: CustomDrawer(),
-          body: currentPage[activePage],
+          body: currentPage[selectedIndex],
         ),
       ),
     );
