@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ingresso_aquii/auth/auth_page.dart';
 import 'package:ingresso_aquii/auth/delete/delete_account_page.dart';
+import 'package:ingresso_aquii/models/movie_shop.dart';
+import 'package:ingresso_aquii/pages/hall_page.dart';
 import 'package:ingresso_aquii/pages/my_tickets.dart';
 import 'package:ingresso_aquii/pages/shopping_cart.dart';
 import 'package:ingresso_aquii/pages/suport_page.dart';
 import 'package:ingresso_aquii/auth/update/update_password_page.dart';
 import 'package:ingresso_aquii/auth/update/update_profile_page.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ingresso_aquii/pages/home_page.dart';
@@ -27,7 +30,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider(
+      create: (context) => MovieShop(),
+      builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: const Color(0xff13001F),
@@ -49,6 +54,8 @@ class MyApp extends StatelessWidget {
           '/updatepassword': (context) => const UpdatePasswordPage(),
           '/updateprofile': (context) => const UpdateProfilePage(),
           '/deleteaccount': (context) => const DeleteAccountPage(),
-        });
+        },
+      ),
+    );
   }
 }
