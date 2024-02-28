@@ -1,8 +1,6 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ingresso_aquii/pages/hall_page.dart';
-import 'package:ingresso_aquii/pages/my_tickets.dart';
 import 'package:ingresso_aquii/pages/shopping_cart.dart';
 import 'package:ingresso_aquii/util/custom_app_bar.dart';
 import 'package:ingresso_aquii/util/custom_drawer.dart';

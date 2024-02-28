@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ingresso_aquii/pages/my_tickets.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -18,7 +17,16 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(widget.title),
+      title: Text(
+        widget.title,
+        style: TextStyle(
+          color: Color(0xff6003A2),
+          fontSize: 20,
+          fontFamily: 'Roboto',
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      iconTheme: IconThemeData(color: Color(0xff6003A2)),
       actions: [
         Padding(
           padding: EdgeInsets.only(right: 16),
@@ -26,7 +34,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
             onPressed: () async => Navigator.pushNamed(context, '/mytickets'),
             icon: const Icon(
               Icons.local_activity,
-              size: 34,
+              size: 36,
             ),
           ),
         ),
