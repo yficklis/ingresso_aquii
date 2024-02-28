@@ -27,7 +27,7 @@ class ProductTileCart extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Color(0xffEADDFF),
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(bottom: 10),

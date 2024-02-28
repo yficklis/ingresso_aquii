@@ -52,17 +52,17 @@ class _HallPageState extends State<HallPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // How to use movie ticket
-              Container(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 248, 230, 252),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 25),
-                padding: EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xffEADDFF),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    padding: EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+                    child: Column(
                       children: [
                         // message
                         Text(
@@ -76,8 +76,7 @@ class _HallPageState extends State<HallPage> {
                         // redeem button
                         GradientButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/suportpage');
+                            Navigator.pushNamed(context, '/howtousepage');
                           },
                           borderRadius: BorderRadius.circular(100),
                           child: Text(
@@ -91,14 +90,8 @@ class _HallPageState extends State<HallPage> {
                         )
                       ],
                     ),
-
-                    // image
-                    // Image.asset(
-                    //   'assets/images/theater.png',
-                    //   height: 100,
-                    // )
-                  ],
-                ),
+                  ),
+                ],
               ),
               // search bar
               SizedBox(height: 28),

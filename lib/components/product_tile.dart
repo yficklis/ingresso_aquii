@@ -18,7 +18,7 @@ class ProductTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[100],
+          color: Color(0xffEADDFF),
           borderRadius: BorderRadius.circular(20),
         ),
         margin: const EdgeInsets.only(left: 25),

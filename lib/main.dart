@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ingresso_aquii/auth/auth_page.dart';
 import 'package:ingresso_aquii/auth/delete/delete_account_page.dart';
 import 'package:ingresso_aquii/models/shop.dart';
+import 'package:ingresso_aquii/pages/how_to_use.dart';
 import 'package:ingresso_aquii/pages/my_tickets.dart';
 import 'package:ingresso_aquii/pages/shopping_cart.dart';
 import 'package:ingresso_aquii/pages/suport_page.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
           '/updatepassword': (context) => const UpdatePasswordPage(),
           '/updateprofile': (context) => const UpdateProfilePage(),
           '/deleteaccount': (context) => const DeleteAccountPage(),
+          '/howtousepage': (context) => const HowToUsePage(),
         });
   }
 }
