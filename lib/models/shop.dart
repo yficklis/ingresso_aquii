@@ -40,12 +40,17 @@ class Shop extends ChangeNotifier {
 
     _cart.forEach((element) {
       if (element.id == productItem.id) {
-        print("QUANTIDADE ATUAL ---> ${element.quantity} <--");
-
         element.quantity += quantity;
-        print(
-          "${element.id} - ${element.name} - ${element.price} - ${element.quantity}",
-        );
+      }
+    });
+    notifyListeners();
+  }
+
+  // add from cart by one
+  void addFromCartByOnce(String idProduct) {
+    _cart.forEach((element) {
+      if (element.id == idProduct) {
+        element.quantity++;
       }
     });
     notifyListeners();
@@ -55,5 +60,29 @@ class Shop extends ChangeNotifier {
   void removeFromCart(Product product) {
     _cart.remove(product);
     notifyListeners();
+  }
+
+  // remove from cart by one
+  void removeFromCartByOnce(String idProduct) {
+    _cart.forEach((element) {
+      if (element.id == idProduct && element.quantity > 1) {
+        element.quantity--;
+      }
+    });
+    notifyListeners();
+  }
+
+  // return total price
+  double totalPriceIncart() {
+    double valueTotal = 0;
+    _cart.forEach((element) {
+      valueTotal += (element.price * element.quantity);
+    });
+    return valueTotal;
+  }
+
+  String formatTotalPrice() {
+    String price = this.totalPriceIncart().toStringAsFixed(2);
+    return price.replaceAll('.', ',');
   }
 }

@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ingresso_aquii/models/product.dart';
 import 'package:ingresso_aquii/models/shop.dart';
+import 'package:ingresso_aquii/util/empty_shopping_cart.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
-import 'package:ingresso_aquii/util/product_tile_cart.dart';
+import 'package:ingresso_aquii/components/product_tile_cart.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingCart extends StatefulWidget {
@@ -17,6 +19,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
   final user = FirebaseAuth.instance.currentUser!;
   void removeFromCart(Product product) {
     Provider.of<Shop>(context, listen: false).removeFromCart(product);
+  }
+
+  String getValueTotal() {
+    return Provider.of<Shop>(context, listen: false).formatTotalPrice();
   }
 
   // pay button tapped
@@ -36,15 +42,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              const Text(
-                "Seu carrinho",
-                style: TextStyle(
-                  color: Color(0xff260145),
-                  fontSize: 16,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w500,
+              if (value.cart.length == 0) EmptyShoppingCart(),
+              if (value.cart.length > 0)
+                Text(
+                  "Seu carrinho",
+                  style: GoogleFonts.dmSerifDisplay(fontSize: 28),
                 ),
-              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: value.cart.length,
@@ -61,6 +64,28 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   },
                 ),
               ),
+              SizedBox(height: 10),
+              if (value.cart.length > 0)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // message
+                    Text(
+                      'Valor total:',
+                      style: GoogleFonts.dmSerifDisplay(
+                        fontSize: 28,
+                        color: Color(0xff363435),
+                      ),
+                    ),
+                    Text(
+                      '${getValueTotal()}',
+                      style: GoogleFonts.dmSerifDisplay(
+                        fontSize: 28,
+                        color: Color(0xff363435),
+                      ),
+                    ),
+                  ],
+                ),
               SizedBox(height: 25),
               // pay button
               if (value.cart.length > 0)
@@ -74,7 +99,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                     children: [
                       // text
                       Text(
-                        'Seguir para o pagamento',
+                        'Prosseguir para pagamento',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Roboto',
