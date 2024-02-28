@@ -136,33 +136,33 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 28.0,
-                        right: 28.0,
-                        bottom: 38.0,
-                      ),
-                      child: DefaultButton(
-                        width: double.infinity,
-                        onPressed: () {
-                          signAsAnonymous();
-                        },
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(100),
-                        child: const Text(
-                          'Continuar sem uma conta',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(
+                    //     left: 28.0,
+                    //     right: 28.0,
+                    //     bottom: 38.0,
+                    //   ),
+                    //   child: DefaultButton(
+                    //     width: double.infinity,
+                    //     onPressed: () {
+                    //       signAsAnonymous();
+                    //     },
+                    //     color: Theme.of(context).primaryColor,
+                    //     borderRadius: BorderRadius.circular(100),
+                    //     child: const Text(
+                    //       'Continuar sem uma conta',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontFamily: 'Roboto',
+                    //         fontWeight: FontWeight.w500,
+                    //         decoration: TextDecoration.underline,
+                    //         decorationColor: Colors.white,
+                    //         fontSize: 16.0,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
 
                     // withou login
                   ],
