@@ -1,18 +1,24 @@
 class Product {
+  String id;
   String name;
   double price;
   String imagePath;
   String subscription;
+  int quantity;
 
   Product({
+    required this.id,
     required this.name,
     required this.price,
     required this.imagePath,
     required this.subscription,
+    required this.quantity,
   });
 
-  String get _name => _name;
-  double get _price => _price;
-  String get _imagePath => _imagePath;
-  String get _subscription => _subscription;
+  String get _id => id;
+  String get _name => name;
+  double get _price => price;
+  String get _imagePath => imagePath;
+  String get _subscription => subscription;
+  int get _quantity => quantity;
 }

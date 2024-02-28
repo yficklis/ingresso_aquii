@@ -5,16 +5,20 @@ import 'product.dart';
 class Shop extends ChangeNotifier {
   final List<Product> _productMenu = [
     Product(
+      id: '01',
       name: 'Ingresso',
       price: 12.90,
       imagePath: 'assets/images/cinema.png',
       subscription: 'Ingresso de cinema',
+      quantity: 0,
     ),
     Product(
+      id: '02',
       name: 'Combo Grande',
       price: 34.90,
       imagePath: 'assets/images/watching-a-movie.png',
       subscription: '1 Pipoca G e 1 Regrigerante G',
+      quantity: 0,
     ),
   ];
 
@@ -28,9 +32,22 @@ class Shop extends ChangeNotifier {
 
   // add to cart
   void addToCart(Product productItem, int quantity) {
-    for (int i = 0; i < quantity; i++) {
+    if (!_cart.contains(productItem)) {
+      productItem.quantity = quantity;
       _cart.add(productItem);
+      return;
     }
+
+    _cart.forEach((element) {
+      if (element.id == productItem.id) {
+        print("QUANTIDADE ATUAL ---> ${element.quantity} <--");
+
+        element.quantity += quantity;
+        print(
+          "${element.id} - ${element.name} - ${element.price} - ${element.quantity}",
+        );
+      }
+    });
     notifyListeners();
   }
 
@@ -38,29 +55,5 @@ class Shop extends ChangeNotifier {
   void removeFromCart(Product product) {
     _cart.remove(product);
     notifyListeners();
-  }
-
-  // Get aggregated cart items with quantities
-  List<Map<String, dynamic>> getCartWithQuantities() {
-    Map<String, int> productQuantities = {};
-
-    for (Product product in _cart) {
-      if (productQuantities.containsKey(product.name)) {
-        productQuantities[product.name] = productQuantities[product.name]! + 1;
-      } else {
-        productQuantities[product.name] = 1;
-      }
-    }
-
-    List<Map<String, dynamic>> aggregatedCart = [];
-
-    productQuantities.forEach((productName, quantity) {
-      aggregatedCart.add({
-        'product': productName,
-        'quantity': quantity,
-      });
-    });
-
-    return aggregatedCart;
   }
 }
