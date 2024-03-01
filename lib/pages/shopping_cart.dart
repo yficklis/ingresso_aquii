@@ -245,6 +245,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
     );
   }
 
+  void payNowStripe() async {
+    Navigator.pushNamed(context, '/checkoutpage');
+  }
+
   // pay button tapped
   void payNow() async {
     showDialog(
@@ -383,7 +387,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
               if (value.cart.length > 0)
                 GradientButton(
                   onPressed: () {
-                    payNow();
+                    payNowStripe();
                   },
                   borderRadius: BorderRadius.circular(100),
                   child: Row(

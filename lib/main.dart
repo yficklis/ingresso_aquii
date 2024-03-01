@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:ingresso_aquii/auth/auth_page.dart';
 import 'package:ingresso_aquii/auth/delete/delete_account_page.dart';
 import 'package:ingresso_aquii/models/shop.dart';
+import 'package:ingresso_aquii/pages/checkout_page.dart';
 import 'package:ingresso_aquii/pages/how_to_use.dart';
 import 'package:ingresso_aquii/pages/my_tickets.dart';
 import 'package:ingresso_aquii/pages/shopping_cart.dart';
@@ -21,6 +23,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Stripe.publishableKey =
+      'pk_test_51OFdVPF4ZPi532M06EJ4enR3zouzbVn2u1U8dxyTmrvrrAtQ7sv4rwIUKdJEMNZpGBYFFw2vME7imAPAZMO1Q7sE00tIpqBsnj';
+  await Stripe.instance.applySettings();
   runApp(
     ChangeNotifierProvider(
       create: (context) => Shop(),
@@ -58,6 +63,7 @@ class MyApp extends StatelessWidget {
           '/updateprofile': (context) => const UpdateProfilePage(),
           '/deleteaccount': (context) => const DeleteAccountPage(),
           '/howtousepage': (context) => const HowToUsePage(),
+          '/checkoutpage': (context) => const CheckoutPage(),
         });
   }
 }
