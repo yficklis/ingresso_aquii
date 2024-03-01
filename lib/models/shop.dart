@@ -85,4 +85,21 @@ class Shop extends ChangeNotifier {
     String price = this.totalPriceIncart().toStringAsFixed(2);
     return price.replaceAll('.', ',');
   }
+
+  int getTotalItemForSale(String item) {
+    String idSearch = (item == 'ingressos') ? '01' : '02';
+    int totalQuantity = 0;
+    _cart.forEach((element) {
+      if (element.id == idSearch && element.quantity > 1) {
+        totalQuantity = element.quantity;
+      }
+    });
+    notifyListeners();
+    return totalQuantity;
+  }
+
+  void deleteAllFromCart() {
+    _cart = [];
+    notifyListeners();
+  }
 }

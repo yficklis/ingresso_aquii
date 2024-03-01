@@ -42,36 +42,47 @@ class _ShoppingCartState extends State<ShoppingCart> {
     } on FirebaseAuthException catch (e) {
       if (e.code != '') {
         // Log or handle the FirebaseAuthException
-        print('FirebaseAuthException: ${e.code}');
+        print("Failed with error '${e.code}': ${e.message}");
         return '';
       }
     } catch (e) {
       // Log or handle other exceptions
-      print('Error: $e');
+      print("Failed with error catch '${e}'");
       return '';
     }
     return '';
   }
 
-  Future<QuerySnapshot> retrieveAllLotesByCinemaId(String cinemaId) async {
-    // Reference to the "lotes" subcollection
-    CollectionReference lotesRef = FirebaseFirestore.instance
-        .collection('cinemas')
-        .doc(cinemaId)
-        .collection('lotes');
+  Future<Map<String, dynamic>> retrieveAllLotesByCinemaId(
+      String cinemaId) async {
+    try {
+      // Reference to the "lotes" subcollection
+      CollectionReference lotesRef = FirebaseFirestore.instance
+          .collection('cinemas')
+          .doc(cinemaId)
+          .collection('lotes');
 
-    // Retrieve all "lotes" of the cinema
-    QuerySnapshot lotesSnapshot =
-        await lotesRef.where('status', isEqualTo: true).get();
-    return lotesSnapshot;
+      // Retrieve all "lotes" of the cinema
+      QuerySnapshot lotesSnapshot =
+          await lotesRef.where('status', isEqualTo: true).get();
+
+      // Convert QuerySnapshot to a Map<String, dynamic>
+      Map<String, dynamic> lotesData = {};
+      for (QueryDocumentSnapshot doc in lotesSnapshot.docs) {
+        lotesData[doc.id] = doc.data();
+      }
+      return lotesData;
+    } on FirebaseException catch (e) {
+      print("Failed with error '${e.code}': ${e.message}");
+      return {};
+    } catch (e) {
+      print("Failed with error catch '${e}'");
+      return {};
+    }
   }
 
-  retriveSubCollectionByLote(
-    String cinemaId,
-    String loteId,
-    String itemCollection,
-    int limit,
-  ) async {
+  Future<List> checkIfProductExistInLote(
+      String cinemaId, String loteId, String itemCollection) async {
     // Reference to the "item" subcollection inside the current "lote"
     CollectionReference itemRef = FirebaseFirestore.instance
         .collection('cinemas')
@@ -80,53 +91,239 @@ class _ShoppingCartState extends State<ShoppingCart> {
         .doc(loteId)
         .collection(itemCollection);
 
-    // Limit the number of "ingresso" documents to 5
+    // Limit the number of "item"
     Query itemQuery = itemRef
         .where('status', isEqualTo: true)
-        .where('vendido', isEqualTo: false)
-        .limit(limit);
+        .where('vendido', isEqualTo: false);
 
     // Retrieve all "item" documents inside the current "lote"
     QuerySnapshot itemSnapshot = await itemQuery.get();
 
-    // Process each "item" document
-    for (QueryDocumentSnapshot itemDocument in itemSnapshot.docs) {
-      // Access the "item" document ID
-      String itemId = itemDocument.id;
-
-      // Update the "vendido" attribute to false
-      await itemRef.doc(itemId).update({'vendido': true});
-
-      // Create a subcollection inside the "user" collection to store the "item" IDs
-      CollectionReference userTicketsRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .collection('my_tickets');
-
-      // Add the "item" ID to the "my_tickets" subcollection inside
-      await userTicketsRef.add({
-        'itemId': itemId,
-        'type': itemCollection,
-        'status': true,
-      });
+    if (!itemSnapshot.docs.isNotEmpty) {
+      return [];
     }
+    List listProduct = [];
+    for (QueryDocumentSnapshot itemDocument in itemSnapshot.docs) {
+      listProduct.add(itemDocument.id);
+    }
+    return listProduct;
+  }
+
+  Future<void> finishPurcheseByType(String type, int limit) async {
+    String cinemaId =
+        await getIdMovieTheatherByName('Praia Grande', 'regional');
+
+    if (cinemaId != '') {
+      // Retrieve all "lotes" of the cinema
+      Map lotesSnapshot = await this.retrieveAllLotesByCinemaId(cinemaId);
+      Map listProductByLote = {};
+      if (!lotesSnapshot.isEmpty) {
+        // Iterate through each "lote" document
+        for (final loteId in lotesSnapshot.keys) {
+          List productList =
+              await checkIfProductExistInLote(cinemaId, loteId, type);
+          if (productList.length > 0) {
+            listProductByLote[loteId] = productList;
+          }
+        }
+        if (chekcQuantityByProdcut(listProductByLote, limit, type)) {
+          for (var i = 0; i < limit; i++) {
+            await buyItem(cinemaId, type);
+          }
+        }
+      }
+    }
+  }
+
+  Future<void> buyItem(String cinemaId, String item) async {
+    // Referência para a subcoleção 'lotes' com filtro para status
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // Referência para a coleção 'lotes' do cinema
+    QuerySnapshot lotesQuery = await firestore
+        .collection('cinemas')
+        .doc(cinemaId)
+        .collection('lotes')
+        .where('status', isEqualTo: true)
+        .get();
+
+    for (QueryDocumentSnapshot loteDoc in lotesQuery.docs) {
+      // Referência para a subcoleção 'ingressos' do lote
+      QuerySnapshot ingressosQuery = await firestore
+          .collection('cinemas')
+          .doc(cinemaId)
+          .collection('lotes')
+          .doc(loteDoc.id)
+          .collection(item)
+          .where('status', isEqualTo: true)
+          .where('vendido', isEqualTo: false)
+          .get();
+
+      if (ingressosQuery.docs.isNotEmpty) {
+        // Obtenha o primeiro ingresso encontrado
+        DocumentSnapshot ingressoDoc = ingressosQuery.docs.first;
+        // Atualize o ingresso
+        await ingressoDoc.reference.update({'vendido': true});
+        // Adicione o ingresso à subcoleção 'my_tickets' do usuário
+        await addUserTicket(ingressoDoc.id, loteDoc.id, item);
+        return;
+      }
+    }
+  }
+
+  Future<void> addUserTicket(String itemId, String loteId, String item) async {
+    // Referência para a subcoleção 'my_tickets' do usuário
+    CollectionReference userTicketsRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('my_tickets');
+
+    // Adicione o ingresso à subcoleção 'my_tickets'
+    await userTicketsRef.add({
+      'loteId': loteId,
+      'tipo': item,
+      'ingressoId': itemId,
+      'status': true,
+    });
+    Navigator.pop(context);
+    successPurchase();
+  }
+
+  bool chekcQuantityByProdcut(Map listProductByLote, int limit, String type) {
+    if (!listProductByLote.isNotEmpty) {
+      Navigator.pop(context);
+      openAnimetedDialog(
+        'Desculpe',
+        'Quantidade de ${type} selecionados, não estão indisponiveis, por favor tente mais tarde!',
+      );
+
+      return false;
+    }
+    List qtdProduct = [];
+    listProductByLote.forEach((key, value) {
+      qtdProduct = List.from(qtdProduct)..addAll(value);
+    });
+    if (qtdProduct.length < limit) {
+      Navigator.pop(context);
+      openAnimetedDialog(
+        'Desculpe',
+        'Quantidade de ${type} selecionados, não estão indisponiveis, por favor tente mais tarde!',
+      );
+      return false;
+    }
+    return true;
+  }
+
+  void successPurchase() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (builder) => AlertDialog(
+        content: const Text(
+          'Compra bem sucedida!',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          Center(
+            child: IconButton(
+              onPressed: () {
+                //delete all from cart
+                Provider.of<Shop>(context, listen: false).deleteAllFromCart();
+                // pop again to go previus screen
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.done,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   // pay button tapped
   void payNow() async {
-    String cinemaId =
-        await getIdMovieTheatherByName('Praia Grande', 'regional');
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
 
-    // Retrieve all "lotes" of the cinema
-    QuerySnapshot lotesSnapshot =
-        await this.retrieveAllLotesByCinemaId(cinemaId);
+    try {
+      // get quantidade de ingressos
+      int qtdTicket = Provider.of<Shop>(context, listen: false)
+          .getTotalItemForSale('ingressos');
 
-    // Iterate through each "lote" document
-    for (QueryDocumentSnapshot loteDocument in lotesSnapshot.docs) {
-      // Access the "lote" document ID
-      String loteId = loteDocument.id;
-      retriveSubCollectionByLote(cinemaId, loteId, 'combos', 2);
+      // get quantidade de combos
+      int qtdCombo = Provider.of<Shop>(context, listen: false)
+          .getTotalItemForSale('combos');
+
+      if (qtdCombo > 0) {
+        await finishPurcheseByType('combos', qtdCombo);
+      }
+
+      if (qtdTicket > 0) {
+        await finishPurcheseByType('ingressos', qtdTicket);
+      }
+    } on FirebaseException catch (e) {
+      Navigator.pop(context);
+      openAnimetedDialog("Failed with error '${e.code}'", '${e.message}');
+    } catch (e) {
+      Navigator.pop(context);
+      openAnimetedDialog("Failed with error '${e}'", '${e}');
     }
+  }
+
+  void openAnimetedDialog(String title, String content) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: '',
+      transitionDuration: const Duration(microseconds: 400),
+      pageBuilder: (context, animation1, animation2) {
+        return Container();
+      },
+      transitionBuilder: (context, a1, a2, widget) {
+        return ScaleTransition(
+          scale: Tween<double>(begin: 0.5, end: 1.0).animate(a1),
+          child: FadeTransition(
+            opacity: Tween<double>(begin: 0.5, end: 1.0).animate(a1),
+            child: AlertDialog(
+              title: Text(
+                title,
+                style: const TextStyle(
+                  color: Color(0xff6003A2),
+                  fontSize: 16,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              content: Text(
+                content,
+                style: const TextStyle(
+                  color: Color(0xff6003A2),
+                  fontSize: 24,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              shape: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
