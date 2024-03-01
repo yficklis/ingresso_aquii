@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ingresso_aquii/util/custom_app_bar.dart';
 
 class MyTickets extends StatefulWidget {
   const MyTickets({super.key});
