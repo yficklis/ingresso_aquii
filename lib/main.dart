@@ -66,7 +66,6 @@ class MyApp extends StatelessWidget {
           '/updateprofile': (context) => const UpdateProfilePage(),
           '/deleteaccount': (context) => const DeleteAccountPage(),
           '/howtousepage': (context) => const HowToUsePage(),
-          '/checkoutpage': (context) => const CheckoutPage(),
         });
   }
 }

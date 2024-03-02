@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ingresso_aquii/models/product.dart';
 import 'package:ingresso_aquii/models/shop.dart';
+import 'package:ingresso_aquii/pages/checkout_page.dart';
 import 'package:ingresso_aquii/util/empty_shopping_cart.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
 import 'package:ingresso_aquii/components/product_tile_cart.dart';
@@ -127,65 +128,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
           }
         }
         if (chekcQuantityByProdcut(listProductByLote, limit, type)) {
-          for (var i = 0; i < limit; i++) {
-            await buyItem(cinemaId, type);
-          }
+          Map dados = {'cinemaId': cinemaId, 'type': type, 'limit': limit};
+          Navigator.pop(context);
+          payNowStripe(dados);
         }
       }
     }
-  }
-
-  Future<void> buyItem(String cinemaId, String item) async {
-    // Referência para a subcoleção 'lotes' com filtro para status
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    // Referência para a coleção 'lotes' do cinema
-    QuerySnapshot lotesQuery = await firestore
-        .collection('cinemas')
-        .doc(cinemaId)
-        .collection('lotes')
-        .where('status', isEqualTo: true)
-        .get();
-
-    for (QueryDocumentSnapshot loteDoc in lotesQuery.docs) {
-      // Referência para a subcoleção 'ingressos' do lote
-      QuerySnapshot ingressosQuery = await firestore
-          .collection('cinemas')
-          .doc(cinemaId)
-          .collection('lotes')
-          .doc(loteDoc.id)
-          .collection(item)
-          .where('status', isEqualTo: true)
-          .where('vendido', isEqualTo: false)
-          .get();
-
-      if (ingressosQuery.docs.isNotEmpty) {
-        // Obtenha o primeiro ingresso encontrado
-        DocumentSnapshot ingressoDoc = ingressosQuery.docs.first;
-        // Atualize o ingresso
-        await ingressoDoc.reference.update({'vendido': true});
-        // Adicione o ingresso à subcoleção 'my_tickets' do usuário
-        await addUserTicket(ingressoDoc.id, loteDoc.id, item);
-        return;
-      }
-    }
-  }
-
-  Future<void> addUserTicket(String itemId, String loteId, String item) async {
-    // Referência para a subcoleção 'my_tickets' do usuário
-    CollectionReference userTicketsRef = FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .collection('my_tickets');
-
-    // Adicione o ingresso à subcoleção 'my_tickets'
-    await userTicketsRef.add({
-      'loteId': loteId,
-      'tipo': item,
-      'ingressoId': itemId,
-      'status': true,
-    });
-    Navigator.pop(context);
-    successPurchase();
   }
 
   bool chekcQuantityByProdcut(Map listProductByLote, int limit, String type) {
@@ -213,40 +161,13 @@ class _ShoppingCartState extends State<ShoppingCart> {
     return true;
   }
 
-  void successPurchase() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (builder) => AlertDialog(
-        content: const Text(
-          'Compra bem sucedida!',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        actions: [
-          Center(
-            child: IconButton(
-              onPressed: () {
-                //delete all from cart
-                Provider.of<Shop>(context, listen: false).deleteAllFromCart();
-                // pop again to go previus screen
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.done,
-              ),
-            ),
-          ),
-        ],
+  void payNowStripe(Map data) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CheckoutPage(data: data),
       ),
     );
-  }
-
-  void payNowStripe() async {
-    Navigator.pushNamed(context, '/checkoutpage');
   }
 
   // pay button tapped
@@ -387,7 +308,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
               if (value.cart.length > 0)
                 GradientButton(
                   onPressed: () {
-                    payNowStripe();
+                    payNow();
                   },
                   borderRadius: BorderRadius.circular(100),
                   child: Row(

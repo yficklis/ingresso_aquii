@@ -16,6 +16,16 @@ class _MyTicketsState extends State<MyTickets> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: EdgeInsets.only(right: 16),
+          child: IconButton(
+            onPressed: () async => Navigator.pushNamed(context, '/homepage'),
+            icon: const Icon(
+              Icons.home,
+              size: 36,
+            ),
+          ),
+        ),
         title: Text(
           'Minhas compras',
           style: TextStyle(
