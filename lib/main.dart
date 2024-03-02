@@ -3,7 +3,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:ingresso_aquii/auth/auth_page.dart';
 import 'package:ingresso_aquii/auth/delete/delete_account_page.dart';
 import 'package:ingresso_aquii/models/shop.dart';
-import 'package:ingresso_aquii/pages/checkout_page.dart';
 import 'package:ingresso_aquii/pages/how_to_use.dart';
 import 'package:ingresso_aquii/pages/my_tickets.dart';
 import 'package:ingresso_aquii/pages/shopping_cart.dart';
