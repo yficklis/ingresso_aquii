@@ -14,6 +14,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "578780347386-fj7m6a1d7mb63c901bidhfcj2o4h897k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ingresso_aquii",
+            "certificate_hash": "efd26ba1e9c52ba5ddbe12dd21d7ac2904408b3e"
+          }
+        },
+        {
+          "client_id": "578780347386-igsthomvtastvda9jde679rhs49dmpi9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ingresso_aquii",
+            "certificate_hash": "b3fb292232b9d81095a4b29e5a281b4d206b7396"
+          }
+        },
+        {
+          "client_id": "578780347386-nr9psnojamob721rk6bfkhpnrlcveoih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ingresso_aquii",
+            "certificate_hash": "45255fba60c873c6b115cb07b77b89dc02439930"
+          }
+        },
+        {
           "client_id": "578780347386-q1o35b9pbk2gnh6r1qtoofr75rmtindm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -21,6 +45,50 @@
             "certificate_hash": "aa4752f5dd437fa1f5e849e53f3a47fe59a2fc97"
           }
         },
+        {
+          "client_id": "578780347386-v1o8b0d55f95omobv5e2m3k0qoni0va2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ingresso_aquii",
+            "certificate_hash": "2453fb3fa87d4f0127bf169c6fb6c4aee1daeef4"
+          }
+        },
+        {
+          "client_id": "578780347386-8j8jo2p3nkh9aon57mkpa6blodelirah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvBQCpAzvkL43WlQr9I8TtwE03vhu8elE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578780347386-8j8jo2p3nkh9aon57mkpa6blodelirah.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "578780347386-6e86n1l5lgj3qps3puq4m6rcn7ojhvvv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ingressoAquii.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578780347386:android:113ae2c1b61fce2906c243",
+        "android_client_info": {
+          "package_name": "com.yficklis.ingresso_aquii"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "578780347386-8j8jo2p3nkh9aon57mkpa6blodelirah.apps.googleusercontent.com",
           "client_type": 3

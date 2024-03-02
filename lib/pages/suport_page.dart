@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ingresso_aquii/util/custom_app_bar.dart';
 import 'package:ingresso_aquii/util/default_textfield.dart';

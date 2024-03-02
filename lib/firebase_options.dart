@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDvBQCpAzvkL43WlQr9I8TtwE03vhu8elE',
-    appId: '1:578780347386:android:e4f1189697bb8f2606c243',
+    appId: '1:578780347386:android:113ae2c1b61fce2906c243',
     messagingSenderId: '578780347386',
     projectId: 'ingressoaquii-eb010',
     storageBucket: 'ingressoaquii-eb010.appspot.com',
@@ -66,7 +66,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '578780347386',
     projectId: 'ingressoaquii-eb010',
     storageBucket: 'ingressoaquii-eb010.appspot.com',
-    androidClientId: '578780347386-q1o35b9pbk2gnh6r1qtoofr75rmtindm.apps.googleusercontent.com',
+    androidClientId: '578780347386-fj7m6a1d7mb63c901bidhfcj2o4h897k.apps.googleusercontent.com',
     iosClientId: '578780347386-7878pshdo0erftbco36itbpn8gpsdoab.apps.googleusercontent.com',
     iosBundleId: 'com.example.ingressoAquii',
   );
@@ -77,7 +77,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '578780347386',
     projectId: 'ingressoaquii-eb010',
     storageBucket: 'ingressoaquii-eb010.appspot.com',
-    androidClientId: '578780347386-q1o35b9pbk2gnh6r1qtoofr75rmtindm.apps.googleusercontent.com',
+    androidClientId: '578780347386-fj7m6a1d7mb63c901bidhfcj2o4h897k.apps.googleusercontent.com',
     iosClientId: '578780347386-6e86n1l5lgj3qps3puq4m6rcn7ojhvvv.apps.googleusercontent.com',
     iosBundleId: 'com.example.ingressoAquii.RunnerTests',
   );
