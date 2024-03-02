@@ -21,12 +21,12 @@ class PaymentClient {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: {
-        'payment_method_id': paymentMethodId,
+      body: json.encode({
+        'paymentMethodId': paymentMethodId,
         'items': items,
         'currency': currency,
-        'use_stripe_sdk': useStripeSdk
-      },
+        'useStripeSdk': useStripeSdk,
+      }),
     );
     return json.decode(response.body);
   }

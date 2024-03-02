@@ -21,8 +21,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
     return Provider.of<Shop>(context, listen: false).formatTotalPrice();
   }
 
-  List getShoppingCart() {
-    return Provider.of<Shop>(context, listen: false).cart;
+  List<Map<String, dynamic>> getShoppingCart() {
+    List<Product> cart = Provider.of<Shop>(context, listen: false).cart;
+    List<Map<String, dynamic>> cartList =
+        cart.map((product) => product.toJson()).toList();
+    return cartList;
   }
 
   @override
@@ -129,12 +132,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
       ),
     );
     final cart = getShoppingCart();
-    print(cart);
-    // final response = await paymentClient.processPayment(
-    //   paymentMethodId: paymentMethod.id,
-    //   items: cart,
-    // );
 
-    // print(response);
+    final response = await paymentClient.processPayment(
+      paymentMethodId: paymentMethod.id,
+      items: cart,
+    );
+    print(response);
   }
 }

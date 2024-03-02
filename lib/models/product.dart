@@ -15,6 +15,17 @@ class Product {
     required this.quantity,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'price': price,
+      'imagePath': imagePath,
+      'subscription': subscription,
+      'quantity': quantity,
+    };
+  }
+
   String get _id => id;
   String get _name => name;
   double get _price => price;
