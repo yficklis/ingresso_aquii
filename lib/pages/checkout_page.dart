@@ -64,15 +64,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
               const SizedBox(
                 height: 16.0,
               ),
-              // CardFormField(
-              //   enablePostalCode: false,
-              //   countryCode: 'BR',
-              //   onCardChanged: (card) {
-              //     setState(() {
-              //       _card = card;
-              //     });
-              //   },
-              // )
+              CardFormField(
+                enablePostalCode: false,
+                countryCode: 'BR',
+                onCardChanged: (card) {
+                  setState(() {
+                    _card = card;
+                  });
+                },
+              )
             ],
           ),
         ),

@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ingresso_aquii/models/product.dart';
 import 'package:ingresso_aquii/models/shop.dart';
 import 'package:ingresso_aquii/pages/checkout_page.dart';
-import 'package:ingresso_aquii/pages/maintenance_page.dart';
 import 'package:ingresso_aquii/util/empty_shopping_cart.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
 import 'package:ingresso_aquii/components/product_tile_cart.dart';
@@ -166,8 +165,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          // builder: (context) => CheckoutPage(data: data),
-          builder: (context) => MaintenancePage()),
+        builder: (context) => CheckoutPage(data: data),
+        // builder: (context) => MaintenancePage(),
+      ),
     );
   }
 
