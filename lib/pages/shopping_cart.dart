@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ingresso_aquii/models/product.dart';
 import 'package:ingresso_aquii/models/shop.dart';
 import 'package:ingresso_aquii/pages/checkout_page.dart';
+import 'package:ingresso_aquii/pages/maintenance_page.dart';
 import 'package:ingresso_aquii/util/empty_shopping_cart.dart';
 import 'package:ingresso_aquii/util/gradient_button.dart';
 import 'package:ingresso_aquii/components/product_tile_cart.dart';
@@ -19,6 +20,9 @@ class ShoppingCart extends StatefulWidget {
 
 class _ShoppingCartState extends State<ShoppingCart> {
   final user = FirebaseAuth.instance.currentUser!;
+
+  String? cinemaId;
+
   void removeFromCart(Product product) {
     Provider.of<Shop>(context, listen: false).removeFromCart(product);
   }
@@ -27,52 +31,41 @@ class _ShoppingCartState extends State<ShoppingCart> {
     return Provider.of<Shop>(context, listen: false).formatTotalPrice();
   }
 
-  Future<String> getIdMovieTheatherByName(String cineName, String type) async {
+  Future<String?> getIdMovieTheatherByName(String cineName, String type) async {
     try {
-      CollectionReference cinemaRef =
-          FirebaseFirestore.instance.collection('cinemas');
-      QuerySnapshot cinemasSnapshot = await cinemaRef
+      final cinemasSnapshot = await FirebaseFirestore.instance
+          .collection('cinemas')
           .where('unidade', isEqualTo: cineName)
           .where('tipo', isEqualTo: type)
           .where('status', isEqualTo: true)
+          .limit(1)
           .get();
 
-      return (cinemasSnapshot.docs.isNotEmpty)
+      return cinemasSnapshot.docs.isNotEmpty
           ? cinemasSnapshot.docs.first.id
-          : '';
+          : null;
     } on FirebaseAuthException catch (e) {
-      if (e.code != '') {
-        // Log or handle the FirebaseAuthException
-        print("Failed with error '${e.code}': ${e.message}");
-        return '';
-      }
+      print("Failed with error '${e.code}': ${e.message}");
+      return null;
     } catch (e) {
-      // Log or handle other exceptions
       print("Failed with error catch '${e}'");
-      return '';
+      return null;
     }
-    return '';
   }
 
   Future<Map<String, dynamic>> retrieveAllLotesByCinemaId(
       String cinemaId) async {
     try {
-      // Reference to the "lotes" subcollection
-      CollectionReference lotesRef = FirebaseFirestore.instance
+      final lotesSnapshot = await FirebaseFirestore.instance
           .collection('cinemas')
           .doc(cinemaId)
-          .collection('lotes');
+          .collection('lotes')
+          .where('status', isEqualTo: true)
+          .get();
 
-      // Retrieve all "lotes" of the cinema
-      QuerySnapshot lotesSnapshot =
-          await lotesRef.where('status', isEqualTo: true).get();
-
-      // Convert QuerySnapshot to a Map<String, dynamic>
-      Map<String, dynamic> lotesData = {};
-      for (QueryDocumentSnapshot doc in lotesSnapshot.docs) {
-        lotesData[doc.id] = doc.data();
-      }
-      return lotesData;
+      return {
+        for (final doc in lotesSnapshot.docs) doc.id: doc.data(),
+      };
     } on FirebaseException catch (e) {
       print("Failed with error '${e.code}': ${e.message}");
       return {};
@@ -82,96 +75,111 @@ class _ShoppingCartState extends State<ShoppingCart> {
     }
   }
 
-  Future<List> checkIfProductExistInLote(
+  Future<List<String>> checkIfProductExistInLote(
       String cinemaId, String loteId, String itemCollection) async {
-    // Reference to the "item" subcollection inside the current "lote"
-    CollectionReference itemRef = FirebaseFirestore.instance
+    final itemSnapshot = await FirebaseFirestore.instance
         .collection('cinemas')
         .doc(cinemaId)
         .collection('lotes')
         .doc(loteId)
-        .collection(itemCollection);
-
-    // Limit the number of "item"
-    Query itemQuery = itemRef
+        .collection(itemCollection)
         .where('status', isEqualTo: true)
-        .where('vendido', isEqualTo: false);
+        .where('vendido', isEqualTo: false)
+        .get();
 
-    // Retrieve all "item" documents inside the current "lote"
-    QuerySnapshot itemSnapshot = await itemQuery.get();
-
-    if (!itemSnapshot.docs.isNotEmpty) {
-      return [];
-    }
-    List listProduct = [];
-    for (QueryDocumentSnapshot itemDocument in itemSnapshot.docs) {
-      listProduct.add(itemDocument.id);
-    }
-    return listProduct;
+    return itemSnapshot.docs.map((doc) => doc.id).toList();
   }
 
   Future<void> finishPurcheseByType(String type, int limit) async {
-    String cinemaId =
-        await getIdMovieTheatherByName('Praia Grande', 'regional');
+    cinemaId = await getIdMovieTheatherByName('Praia Grande', 'regional');
 
-    if (cinemaId != '') {
-      // Retrieve all "lotes" of the cinema
-      Map lotesSnapshot = await this.retrieveAllLotesByCinemaId(cinemaId);
-      Map listProductByLote = {};
-      if (!lotesSnapshot.isEmpty) {
-        // Iterate through each "lote" document
-        for (final loteId in lotesSnapshot.keys) {
-          List productList =
-              await checkIfProductExistInLote(cinemaId, loteId, type);
-          if (productList.length > 0) {
-            listProductByLote[loteId] = productList;
-          }
+    if (cinemaId != null) {
+      final lotesSnapshot = await retrieveAllLotesByCinemaId(cinemaId!);
+      final listProductByLote = <String, List<String>>{};
+
+      for (final loteId in lotesSnapshot.keys) {
+        final productList =
+            await checkIfProductExistInLote(cinemaId!, loteId, type);
+        if (productList.isNotEmpty) {
+          listProductByLote[loteId] = productList;
         }
-        if (chekcQuantityByProdcut(listProductByLote, limit, type)) {
-          Map dados = {'cinemaId': cinemaId, 'type': type, 'limit': limit};
-          Navigator.pop(context);
-          payNowStripe(dados);
-        }
+      }
+
+      if (checkQuantityByProduct(listProductByLote, limit)) {
+        final data = {'cinemaId': cinemaId, 'type': type, 'limit': limit};
+        Navigator.pop(context);
+        payNowStripe(data);
       }
     }
   }
 
-  bool chekcQuantityByProdcut(Map listProductByLote, int limit, String type) {
-    if (!listProductByLote.isNotEmpty) {
+  bool checkQuantityByProduct(
+      Map<String, List<String>> listProductByLote, int limit) {
+    if (listProductByLote.isEmpty) {
       Navigator.pop(context);
-      openAnimetedDialog(
+      openAnimatedDialog(
         'Desculpe',
-        'Quantidade de ${type} selecionados, não estão indisponiveis, por favor tente mais tarde!',
+        'A quantidade selecionada não está disponível. Por favor, tente novamente mais tarde!',
       );
-
       return false;
     }
-    List qtdProduct = [];
-    listProductByLote.forEach((key, value) {
-      qtdProduct = List.from(qtdProduct)..addAll(value);
-    });
+
+    final qtdProduct =
+        listProductByLote.values.expand((products) => products).toList();
+
     if (qtdProduct.length < limit) {
       Navigator.pop(context);
-      openAnimetedDialog(
+      openAnimatedDialog(
         'Desculpe',
-        'Quantidade de ${type} selecionados, não estão indisponiveis, por favor tente mais tarde!',
+        'A quantidade selecionada não está disponível. Por favor, tente novamente mais tarde!',
       );
       return false;
     }
     return true;
   }
 
-  void payNowStripe(Map data) async {
+  void payNowStripe(Map<String, dynamic> data) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CheckoutPage(data: data),
-        // builder: (context) => MaintenancePage(),
+        // builder: (context) => CheckoutPage(data: data),
+        builder: (context) => MaintenancePage(),
       ),
     );
   }
 
-  // pay button tapped
+  void openAnimatedDialog(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            title,
+            style: TextStyle(
+              color: const Color(0xff6003A2),
+              fontSize: 16,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          content: Text(
+            content,
+            style: TextStyle(
+              color: const Color(0xff6003A2),
+              fontSize: 24,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16.0),
+            borderSide: BorderSide.none,
+          ),
+        );
+      },
+    );
+  }
+
   void payNow() async {
     showDialog(
       context: context,
@@ -184,12 +192,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
     );
 
     try {
-      // get quantidade de ingressos
-      int qtdTicket = Provider.of<Shop>(context, listen: false)
+      final qtdTicket = Provider.of<Shop>(context, listen: false)
           .getTotalItemForSale('ingressos');
-
-      // get quantidade de combos
-      int qtdCombo = Provider.of<Shop>(context, listen: false)
+      final qtdCombo = Provider.of<Shop>(context, listen: false)
           .getTotalItemForSale('combos');
 
       if (qtdCombo > 0) {
@@ -201,55 +206,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
       }
     } on FirebaseException catch (e) {
       Navigator.pop(context);
-      openAnimetedDialog("Failed with error '${e.code}'", '${e.message}');
+      openAnimatedDialog("Falha com o erro '${e.code}'", '${e.message}');
     } catch (e) {
       Navigator.pop(context);
-      openAnimetedDialog("Failed with error '${e}'", '${e}');
+      openAnimatedDialog("Falha com o erro '${e}'", '${e}');
     }
-  }
-
-  void openAnimetedDialog(String title, String content) {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: '',
-      transitionDuration: const Duration(microseconds: 400),
-      pageBuilder: (context, animation1, animation2) {
-        return Container();
-      },
-      transitionBuilder: (context, a1, a2, widget) {
-        return ScaleTransition(
-          scale: Tween<double>(begin: 0.5, end: 1.0).animate(a1),
-          child: FadeTransition(
-            opacity: Tween<double>(begin: 0.5, end: 1.0).animate(a1),
-            child: AlertDialog(
-              title: Text(
-                title,
-                style: const TextStyle(
-                  color: Color(0xff6003A2),
-                  fontSize: 16,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              content: Text(
-                content,
-                style: const TextStyle(
-                  color: Color(0xff6003A2),
-                  fontSize: 24,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              shape: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.0),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 
   @override
