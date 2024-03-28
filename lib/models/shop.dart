@@ -90,7 +90,7 @@ class Shop extends ChangeNotifier {
     String idSearch = (item == 'ingressos') ? '01' : '02';
     int totalQuantity = 0;
     _cart.forEach((element) {
-      if (element.id == idSearch && element.quantity > 1) {
+      if (element.id == idSearch && element.quantity >= 1) {
         totalQuantity = element.quantity;
       }
     });

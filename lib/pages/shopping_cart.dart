@@ -94,6 +94,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
     cinemaId = await getIdMovieTheatherByName('Praia Grande', 'regional');
 
     if (cinemaId != null) {
+      final data = {'cinemaId': cinemaId, 'type': type, 'limit': limit};
+      Navigator.pop(context);
+      payNowStripe(data);
+      return;
       final lotesSnapshot = await retrieveAllLotesByCinemaId(cinemaId!);
       final listProductByLote = <String, List<String>>{};
 
@@ -142,8 +146,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        // builder: (context) => CheckoutPage(data: data),
-        builder: (context) => MaintenancePage(),
+        builder: (context) => CheckoutPage(data: data),
+        // builder: (context) => MaintenancePage(),
       ),
     );
   }
@@ -196,7 +200,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
           .getTotalItemForSale('ingressos');
       final qtdCombo = Provider.of<Shop>(context, listen: false)
           .getTotalItemForSale('combos');
-
       if (qtdCombo > 0) {
         await finishPurcheseByType('combos', qtdCombo);
       }
