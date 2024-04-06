@@ -98,8 +98,8 @@ class _SignInPageState extends State<SignInPage> {
           title: Center(
             child: Text(
               message,
-              style: const TextStyle(
-                color: Color(0xff260145),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.inversePrimary,
                 fontSize: 16,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w500,
@@ -130,29 +130,22 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 25),
-                //Logo
                 SvgPicture.asset(
-                  'assets/icons/iconLogo.svg',
+                  'assets/icons/new_logo.svg',
                   height: 100,
                   width: 100,
                 ),
-
                 const SizedBox(height: 25),
-
-                // Default message
-                const Text(
+                Text(
                   "Bem-vindo de volta, sentimos sua falta!",
                   style: TextStyle(
-                    color: Color(0xff260145),
+                    color: Theme.of(context).colorScheme.inversePrimary,
                     fontSize: 16,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-
                 const SizedBox(height: 50),
-
-                // username textField
                 DefaultTextfield(
                   controller: _emailController,
                   labelText: 'E-mail',
@@ -161,9 +154,7 @@ class _SignInPageState extends State<SignInPage> {
                   checkError: false,
                   messageError: '',
                 ),
-
                 const SizedBox(height: 10),
-                // password textField
                 DefaultTextfield(
                   controller: _passwordController,
                   labelText: 'Senha',
@@ -172,10 +163,7 @@ class _SignInPageState extends State<SignInPage> {
                   checkError: false,
                   messageError: '',
                 ),
-
                 const SizedBox(height: 10),
-
-                //forgot password
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 28.0),
                   child: Row(
@@ -196,10 +184,11 @@ class _SignInPageState extends State<SignInPage> {
                           "Esqueceu sua senha?",
                           style: TextStyle(
                             fontFamily: 'Roboto',
-                            color: Color(0xff260145),
+                            color: Theme.of(context).colorScheme.inversePrimary,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.underline,
-                            decorationColor: Color(0xff260145),
+                            decorationColor:
+                                Theme.of(context).colorScheme.inversePrimary,
                             fontSize: 16.0,
                           ),
                         ),
@@ -207,18 +196,16 @@ class _SignInPageState extends State<SignInPage> {
                     ],
                   ),
                 ),
-
-                // sign in button
                 Padding(
-                  padding: const EdgeInsets.all(28.0),
+                  padding: EdgeInsets.all(28.0),
                   child: GradientButton(
                     width: double.infinity,
                     onPressed: signUserIn,
                     borderRadius: BorderRadius.circular(100),
-                    child: const Text(
+                    child: Text(
                       'Entre',
                       style: TextStyle(
-                        color: Color(0xffFEFEFE),
+                        color: Theme.of(context).colorScheme.inversePrimary,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w600,
                       ),
@@ -226,7 +213,6 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                // or continue with
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
@@ -234,27 +220,28 @@ class _SignInPageState extends State<SignInPage> {
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Colors.grey[400],
+                          color: Theme.of(context).colorScheme.inversePrimary,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
                           'Ou continue com',
-                          style: TextStyle(color: Colors.grey[700]),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
                         ),
                       ),
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Colors.grey[400],
+                          color: Theme.of(context).colorScheme.inversePrimary,
                         ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 50),
-                // google + facebook sign in buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -264,21 +251,20 @@ class _SignInPageState extends State<SignInPage> {
                         signInWithGoogle();
                       },
                       child: const SquareTile(
-                          imagePath: 'assets/icons/google-colorful.svg'),
+                        imagePath: 'assets/icons/google-colorful.svg',
+                      ),
                     ),
                   ],
                 ),
-
-                // not a member? register now
                 Padding(
                   padding: const EdgeInsets.only(top: 50.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'Não possui conta?',
                         style: TextStyle(
-                          color: Color(0xff363435),
+                          color: Theme.of(context).colorScheme.onBackground,
                           fontSize: 16,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -289,14 +275,15 @@ class _SignInPageState extends State<SignInPage> {
                         onTap: () {
                           Navigator.pushReplacementNamed(context, '/signup');
                         },
-                        child: const Text(
+                        child: Text(
                           'Cadastre-se',
                           style: TextStyle(
                             fontFamily: 'Roboto',
-                            color: Color(0xff260145),
+                            color: Theme.of(context).colorScheme.onSecondary,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.underline,
-                            decorationColor: Color(0xff260145),
+                            decorationColor:
+                                Theme.of(context).colorScheme.onSecondary,
                             fontSize: 16.0,
                           ),
                         ),

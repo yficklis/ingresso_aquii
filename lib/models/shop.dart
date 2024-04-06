@@ -8,7 +8,7 @@ class Shop extends ChangeNotifier {
       id: '01',
       name: 'Ingresso',
       price: 12.90,
-      imagePath: 'assets/images/cinema.png',
+      imagePath: 'assets/images/logo_new.png',
       subscription: 'Ingresso de cinema',
       quantity: 0,
     ),

@@ -30,22 +30,29 @@ class TextfieldWithMask extends StatelessWidget {
         controller: controller,
         inputFormatters: [maskFormatter],
         obscureText: obscureText,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400),
+            borderSide:
+                BorderSide(color: Theme.of(context).colorScheme.onBackground),
           ),
-          focusedBorder: const OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Color(0xff260145),
+              color: Theme.of(context).colorScheme.onBackground,
             ),
           ),
-          fillColor: Colors.grey.shade200,
+          fillColor: Theme.of(context).colorScheme.onBackground,
           filled: false,
           hintText: hintText,
           hintStyle: TextStyle(
-            color: Colors.grey[500],
+            color: Theme.of(context).colorScheme.onBackground,
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w400,
+          ),
+          labelStyle: TextStyle(
+            color: Theme.of(context).colorScheme.onBackground,
           ),
           labelText: labelText,
           floatingLabelBehavior: FloatingLabelBehavior.always,

@@ -20,7 +20,7 @@ class CustomDrawer extends StatelessWidget {
               // drawer header
               DrawerHeader(
                 child: SvgPicture.asset(
-                  'assets/icons/iconLogo.svg',
+                  'assets/icons/new_logo.svg',
                   height: 100,
                   width: 100,
                 ),

@@ -33,8 +33,8 @@ class _SignUpPageState extends State<SignUpPage> {
           title: Center(
             child: Text(
               message,
-              style: const TextStyle(
-                color: Color(0xff260145),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.inversePrimary,
                 fontSize: 16,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w500,
@@ -139,7 +139,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(height: 25),
                 //Logo
                 SvgPicture.asset(
-                  'assets/icons/iconLogo.svg',
+                  'assets/icons/new_logo.svg',
                   height: 100,
                   width: 100,
                 ),
@@ -147,10 +147,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(height: 25),
 
                 // Default message
-                const Text(
+                Text(
                   "Bem-vindo, vamos começar!",
                   style: TextStyle(
-                    color: Color(0xff260145),
+                    color: Theme.of(context).colorScheme.inversePrimary,
                     fontSize: 16,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w500,
@@ -232,20 +232,22 @@ class _SignUpPageState extends State<SignUpPage> {
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Colors.grey[400],
+                          color: Theme.of(context).colorScheme.inversePrimary,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
                           'Ou continue com',
-                          style: TextStyle(color: Colors.grey[700]),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
                         ),
                       ),
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Colors.grey[400],
+                          color: Theme.of(context).colorScheme.inversePrimary,
                         ),
                       ),
                     ],
@@ -273,10 +275,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'Já possui conta?',
                         style: TextStyle(
-                          color: Color(0xff363435),
+                          color: Theme.of(context).colorScheme.onBackground,
                           fontSize: 16,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -287,14 +289,15 @@ class _SignUpPageState extends State<SignUpPage> {
                         onTap: () {
                           Navigator.pushReplacementNamed(context, '/signin');
                         },
-                        child: const Text(
+                        child: Text(
                           'Entre',
                           style: TextStyle(
                             fontFamily: 'Roboto',
-                            color: Color(0xff260145),
+                            color: Theme.of(context).colorScheme.onSecondary,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.underline,
-                            decorationColor: Color(0xff260145),
+                            decorationColor:
+                                Theme.of(context).colorScheme.onSecondary,
                             fontSize: 16.0,
                           ),
                         ),

@@ -115,8 +115,8 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
           title: Center(
             child: Text(
               message,
-              style: const TextStyle(
-                color: Color(0xff260145),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.inversePrimary,
                 fontSize: 16,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w500,
@@ -179,6 +179,11 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
+          iconTheme: IconThemeData(
+            color: Theme.of(context)
+                .colorScheme
+                .inversePrimary, //change your color here
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -191,7 +196,7 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                   const SizedBox(height: 25),
                   //Logo
                   SvgPicture.asset(
-                    'assets/icons/iconLogo.svg',
+                    'assets/icons/new_logo.svg',
                     height: 100,
                     width: 100,
                   ),
@@ -199,10 +204,10 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                   const SizedBox(height: 25),
 
                   // Default message
-                  const Text(
+                  Text(
                     "Bem-vindo, vamos começar!",
                     style: TextStyle(
-                      color: Color(0xff260145),
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       fontSize: 16,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w500,
@@ -240,6 +245,8 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                       children: [
                         Checkbox(
                           value: isChecked,
+                          focusColor:
+                              Theme.of(context).colorScheme.inversePrimary,
                           onChanged: (bool? value) {
                             setState(() {
                               isChecked = value!;
@@ -250,9 +257,11 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                           child: Text(
                             "Li e concordo com a Política de Privacidade.",
                             style: TextStyle(
-                              color: Colors.grey[600],
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
                               decoration: TextDecoration.underline,
-                              decorationColor: Colors.white,
+                              decorationColor:
+                                  Theme.of(context).colorScheme.inversePrimary,
                               fontSize: 16.0,
                             ),
                           ),
@@ -288,20 +297,23 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                         Expanded(
                           child: Divider(
                             thickness: 0.5,
-                            color: Colors.grey[400],
+                            color: Theme.of(context).colorScheme.inversePrimary,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text(
                             'Ou continue com',
-                            style: TextStyle(color: Colors.grey[700]),
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Divider(
                             thickness: 0.5,
-                            color: Colors.grey[400],
+                            color: Theme.of(context).colorScheme.inversePrimary,
                           ),
                         ),
                       ],
@@ -329,10 +341,10 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Já possui conta?',
                           style: TextStyle(
-                            color: Color(0xff363435),
+                            color: Theme.of(context).colorScheme.onBackground,
                             fontSize: 16,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -343,14 +355,15 @@ class _SignUpConfirmPageState extends State<SignUpConfirmPage> {
                           onTap: () {
                             Navigator.pushReplacementNamed(context, '/signin');
                           },
-                          child: const Text(
+                          child: Text(
                             'Entre',
                             style: TextStyle(
                               fontFamily: 'Roboto',
-                              color: Color(0xff260145),
+                              color: Theme.of(context).colorScheme.onSecondary,
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.underline,
-                              decorationColor: Color(0xff260145),
+                              decorationColor:
+                                  Theme.of(context).colorScheme.onSecondary,
                               fontSize: 16.0,
                             ),
                           ),

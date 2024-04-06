@@ -17,16 +17,19 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: Text(
         widget.title,
         style: TextStyle(
-          color: Color(0xff6003A2),
+          color: Theme.of(context).colorScheme.inversePrimary,
           fontSize: 20,
           fontFamily: 'Roboto',
           fontWeight: FontWeight.w600,
         ),
       ),
-      iconTheme: IconThemeData(color: Color(0xff6003A2)),
+      iconTheme: IconThemeData(
+        color: Theme.of(context).colorScheme.inversePrimary,
+      ),
       actions: [
         Padding(
           padding: EdgeInsets.only(right: 16),

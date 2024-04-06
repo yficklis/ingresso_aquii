@@ -60,15 +60,15 @@ class _HallPageState extends State<HallPage> {
                       color: Color(0xffEADDFF),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 25),
-                    padding: EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     child: Column(
                       children: [
                         // message
                         Text(
                           'Primeira vez? Sem problemas!',
-                          style: GoogleFonts.dmSerifDisplay(
-                            fontSize: 20,
+                          style: GoogleFonts.inter(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                             color: Color(0xff363435),
                           ),
                         ),
@@ -83,7 +83,7 @@ class _HallPageState extends State<HallPage> {
                             'Saiba como utilizar seu ingresso',
                             style: TextStyle(
                               color: Colors.white,
-                              fontFamily: 'Roboto',
+                              fontFamily: 'Inter',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -100,25 +100,36 @@ class _HallPageState extends State<HallPage> {
                 child: TextField(
                   controller: _searchController,
                   obscureText: false,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade400),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
-                    focusedBorder: const OutlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xff260145),
+                        color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
-                    fillColor: Colors.grey.shade200,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
+                    fillColor: Theme.of(context).colorScheme.onBackground,
                     filled: false,
                     hintText: 'Digite aqui',
                     hintStyle: TextStyle(
-                      color: Colors.grey[500],
+                      color: Theme.of(context).colorScheme.onBackground,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w400,
                     ),
                     labelText: "Produto",
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
                 ),
@@ -133,7 +144,7 @@ class _HallPageState extends State<HallPage> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Inter',
-                    color: Colors.grey[800],
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
                 ),
               ),

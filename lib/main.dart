@@ -46,10 +46,19 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: const Color(0xff13001F),
-          scaffoldBackgroundColor: const Color(0xffFEFAFF),
+          scaffoldBackgroundColor: const Color(0xff260145),
           appBarTheme: const AppBarTheme(
             centerTitle: true,
             elevation: 0,
+          ),
+          colorScheme: ColorScheme.light(
+            background: const Color(0xff260145),
+            primary: const Color(0xff6003A2),
+            secondary: const Color(0xff260145),
+            tertiary: const Color(0xff13001F),
+            inversePrimary: const Color(0xffF4F4F4),
+            onSecondary: const Color(0xffC3AAD1),
+            onBackground: const Color(0xffFDF5FF),
           ),
         ),
         home: const SplashScreen(),

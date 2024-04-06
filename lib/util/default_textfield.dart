@@ -27,24 +27,32 @@ class DefaultTextfield extends StatelessWidget {
       child: TextField(
         controller: controller,
         obscureText: obscureText,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400),
-          ),
-          focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
-              color: Color(0xff260145),
+              color: Theme.of(context).colorScheme.onBackground,
             ),
           ),
-          fillColor: Colors.grey.shade200,
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+          ),
+          fillColor: Theme.of(context).colorScheme.onBackground,
           filled: false,
           hintText: hintText,
           hintStyle: TextStyle(
-            color: Colors.grey[500],
+            color: Theme.of(context).colorScheme.onBackground,
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w400,
           ),
           labelText: labelText,
+          labelStyle: TextStyle(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           errorText: checkError ? messageError : null,
           contentPadding: contentPadding ?? null,

@@ -153,7 +153,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                   const SizedBox(height: 25),
                   //Logo
                   SvgPicture.asset(
-                    'assets/icons/iconLogo.svg',
+                    'assets/icons/new_logo.svg',
                     height: 100,
                     width: 100,
                   ),

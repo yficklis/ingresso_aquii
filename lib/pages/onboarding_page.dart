@@ -52,7 +52,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         body: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
           child: Column(
             children: [
@@ -69,14 +69,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         height: 272,
                       ),
                     ),
-
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(left: 44.0, right: 44.0),
                       child: Text(
                         "Seu lugar para comprar \n ingressos!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Color(0xffFEFEFE),
+                          color: Theme.of(context).colorScheme.inversePrimary,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w500,
                         ),
@@ -101,10 +100,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           Navigator.pushReplacementNamed(context, '/signin');
                         },
                         borderRadius: BorderRadius.circular(100),
-                        child: const Text(
+                        child: Text(
                           'Entre',
                           style: TextStyle(
-                            color: Color(0xffFEFEFE),
+                            color: Theme.of(context).colorScheme.inversePrimary,
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                           ),
@@ -112,7 +111,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                     ),
 
-                    // Sign up button
                     Padding(
                       padding: const EdgeInsets.only(
                         left: 28.0,
@@ -125,46 +123,40 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           Navigator.pushReplacementNamed(context, '/signup');
                         },
                         borderRadius: BorderRadius.circular(100),
-                        child: const Text(
+                        child: Text(
                           'Cadastre-se',
                           style: TextStyle(
-                            color: Color(0xff6003A2),
+                            color: Theme.of(context).colorScheme.primary,
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                     ),
-
-                    // Padding(
-                    //   padding: const EdgeInsets.only(
-                    //     left: 28.0,
-                    //     right: 28.0,
-                    //     bottom: 38.0,
-                    //   ),
-                    //   child: DefaultButton(
-                    //     width: double.infinity,
-                    //     onPressed: () {
-                    //       signAsAnonymous();
-                    //     },
-                    //     color: Theme.of(context).primaryColor,
-                    //     borderRadius: BorderRadius.circular(100),
-                    //     child: const Text(
-                    //       'Continuar sem uma conta',
-                    //       textAlign: TextAlign.center,
-                    //       style: TextStyle(
-                    //         color: Colors.white,
-                    //         fontFamily: 'Roboto',
-                    //         fontWeight: FontWeight.w500,
-                    //         decoration: TextDecoration.underline,
-                    //         decorationColor: Colors.white,
-                    //         fontSize: 16.0,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-
-                    // withou login
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 28.0,
+                        right: 28.0,
+                        bottom: 44.0,
+                      ),
+                      child: GestureDetector(
+                        onTap: () => signAsAnonymous(),
+                        child: Text(
+                          'Continuar sem uma conta',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                            decorationColor:
+                                Theme.of(context).colorScheme.inversePrimary,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               )
