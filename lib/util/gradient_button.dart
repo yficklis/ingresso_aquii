@@ -25,6 +25,7 @@ class GradientButton extends StatelessWidget {
     return Container(
       width: width,
       height: height,
+      constraints: BoxConstraints(maxWidth: 334),
       decoration: BoxDecoration(
         gradient: gradient,
         borderRadius: borderRadius,

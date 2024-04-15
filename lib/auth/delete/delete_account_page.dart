@@ -83,11 +83,11 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
           title: Center(
             child: Text(
               message,
-              style: const TextStyle(
-                color: Color(0xff260145),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.inversePrimary,
                 fontSize: 16,
                 fontFamily: 'Roboto',
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -131,6 +131,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w600,
                     ),

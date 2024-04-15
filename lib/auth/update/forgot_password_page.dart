@@ -28,8 +28,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           title: Center(
             child: Text(
               message,
-              style: const TextStyle(
-                color: Color(0xff260145),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.inversePrimary,
                 fontSize: 16,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w500,
@@ -76,61 +76,65 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.inversePrimary,
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Container(
-            padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25.0),
-                  child: SvgPicture.asset(
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 25),
+                  SvgPicture.asset(
                     'assets/icons/new_logo.svg',
                     height: 100,
                     width: 100,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(28.0),
-                  child: Text(
+                  const SizedBox(height: 25),
+                  Text(
                     'Vamos lhe enviar um e-mail com um link para redefinir sua senha. Favor insira abaixo o seu e-mail cadastrado.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      // color: Color(0xff363435),
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       fontSize: 16,
                       fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ),
-                DefaultTextfield(
-                  controller: _emailController,
-                  labelText: 'E-mail',
-                  hintText: 'Digite aqui',
-                  obscureText: false,
-                  checkError: false,
-                  messageError: '',
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(28.0),
-                  child: GradientButton(
-                    width: double.infinity,
-                    onPressed: passwordReset,
-                    borderRadius: BorderRadius.circular(100),
-                    child: const Text(
-                      'Redefinir senha',
-                      style: TextStyle(
-                        color: Color(0xffFEFEFE),
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w600,
+                  const SizedBox(height: 50),
+                  DefaultTextfield(
+                    controller: _emailController,
+                    labelText: 'E-mail',
+                    hintText: 'Digite aqui',
+                    obscureText: false,
+                    checkError: false,
+                    messageError: '',
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(28.0),
+                    child: GradientButton(
+                      width: double.infinity,
+                      onPressed: passwordReset,
+                      borderRadius: BorderRadius.circular(100),
+                      child: const Text(
+                        'Redefinir senha',
+                        style: TextStyle(
+                          color: Color(0xffFEFEFE),
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

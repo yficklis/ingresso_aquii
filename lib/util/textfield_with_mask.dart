@@ -34,6 +34,7 @@ class TextfieldWithMask extends StatelessWidget {
           color: Theme.of(context).colorScheme.onBackground,
         ),
         decoration: InputDecoration(
+          constraints: BoxConstraints(maxWidth: 334),
           enabledBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(color: Theme.of(context).colorScheme.onBackground),

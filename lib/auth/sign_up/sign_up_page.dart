@@ -293,11 +293,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           'Entre',
                           style: TextStyle(
                             fontFamily: 'Roboto',
-                            color: Theme.of(context).colorScheme.onSecondary,
+                            color: Theme.of(context).colorScheme.inversePrimary,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.underline,
                             decorationColor:
-                                Theme.of(context).colorScheme.onSecondary,
+                                Theme.of(context).colorScheme.inversePrimary,
                             fontSize: 16.0,
                           ),
                         ),

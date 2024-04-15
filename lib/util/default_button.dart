@@ -24,6 +24,7 @@ class DefaultButton extends StatelessWidget {
     return Container(
       width: width,
       height: height,
+      constraints: BoxConstraints(maxWidth: 334),
       decoration: BoxDecoration(
         borderRadius: borderRadius,
         color: color,

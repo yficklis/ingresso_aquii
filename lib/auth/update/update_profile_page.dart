@@ -53,11 +53,11 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           title: Center(
             child: Text(
               message,
-              style: const TextStyle(
-                color: Color(0xff260145),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.inversePrimary,
                 fontSize: 16,
                 fontFamily: 'Roboto',
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -147,86 +147,88 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
             scrollDirection: Axis.vertical,
             child: Container(
               padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 25),
-                  //Logo
-                  SvgPicture.asset(
-                    'assets/icons/new_logo.svg',
-                    height: 100,
-                    width: 100,
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  // Default message
-                  const Text(
-                    "Bem-vindo, vamos começar!",
-                    style: TextStyle(
-                      color: Color(0xff260145),
-                      fontSize: 16,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w500,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 25),
+                    //Logo
+                    SvgPicture.asset(
+                      'assets/icons/new_logo.svg',
+                      height: 100,
+                      width: 100,
                     ),
-                  ),
 
-                  const SizedBox(height: 50),
+                    const SizedBox(height: 25),
 
-                  // username textField
-                  DefaultTextfield(
-                    controller: _nameController,
-                    labelText: 'Nome',
-                    hintText: 'Digite aqui',
-                    obscureText: false,
-                    checkError: false,
-                    messageError: messageError,
-                  ),
+                    // Default message
+                    Text(
+                      "Bem-vindo, vamos começar!",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontSize: 16,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
 
-                  const SizedBox(height: 10),
+                    const SizedBox(height: 50),
 
-                  TextfieldWithMask(
-                    controller: _documentIdController,
-                    labelText: 'CPF',
-                    hintText: 'Digite aqui',
-                    obscureText: false,
-                    maskInput: "###.###.###-##",
-                    checkError: false,
-                    messageError: messageError,
-                  ),
+                    // username textField
+                    DefaultTextfield(
+                      controller: _nameController,
+                      labelText: 'Nome',
+                      hintText: 'Digite aqui',
+                      obscureText: false,
+                      checkError: false,
+                      messageError: messageError,
+                    ),
 
-                  const SizedBox(height: 10),
-                  // password textField
-                  TextfieldWithMask(
-                    controller: _birthController,
-                    labelText: 'Data de nascimento',
-                    hintText: 'Digite aqui',
-                    obscureText: false,
-                    maskInput: "##/##/####",
-                    checkError: false,
-                    messageError: messageError,
-                  ),
+                    const SizedBox(height: 10),
 
-                  const SizedBox(height: 10),
+                    TextfieldWithMask(
+                      controller: _documentIdController,
+                      labelText: 'CPF',
+                      hintText: 'Digite aqui',
+                      obscureText: false,
+                      maskInput: "###.###.###-##",
+                      checkError: false,
+                      messageError: messageError,
+                    ),
 
-                  // sign in button
-                  Padding(
-                    padding: const EdgeInsets.all(28.0),
-                    child: GradientButton(
-                      width: double.infinity,
-                      onPressed: updateProfileMethod,
-                      borderRadius: BorderRadius.circular(100),
-                      child: const Text(
-                        'Atualizar dados',
-                        style: TextStyle(
-                          color: Color(0xffFEFEFE),
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w600,
+                    const SizedBox(height: 10),
+                    // password textField
+                    TextfieldWithMask(
+                      controller: _birthController,
+                      labelText: 'Data de nascimento',
+                      hintText: 'Digite aqui',
+                      obscureText: false,
+                      maskInput: "##/##/####",
+                      checkError: false,
+                      messageError: messageError,
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // sign in button
+                    Padding(
+                      padding: const EdgeInsets.all(28.0),
+                      child: GradientButton(
+                        width: double.infinity,
+                        onPressed: updateProfileMethod,
+                        borderRadius: BorderRadius.circular(100),
+                        child: const Text(
+                          'Atualizar dados',
+                          style: TextStyle(
+                            color: Color(0xffFEFEFE),
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

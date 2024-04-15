@@ -97,41 +97,47 @@ class _HallPageState extends State<HallPage> {
               SizedBox(height: 28),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
-                  controller: _searchController,
-                  obscureText: false,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextField(
+                      controller: _searchController,
+                      obscureText: false,
+                      style: TextStyle(
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.onBackground,
+                      decoration: InputDecoration(
+                        constraints: BoxConstraints(maxWidth: 334),
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        ),
+                        fillColor: Theme.of(context).colorScheme.onBackground,
+                        filled: false,
+                        hintText: 'Digite aqui',
+                        hintStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w400,
+                        ),
+                        labelText: "Produto",
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
                     ),
-                    fillColor: Theme.of(context).colorScheme.onBackground,
-                    filled: false,
-                    hintText: 'Digite aqui',
-                    hintStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                    ),
-                    labelText: "Produto",
-                    labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                  ),
+                  ],
                 ),
               ),
               // options list

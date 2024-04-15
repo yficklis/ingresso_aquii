@@ -167,7 +167,7 @@ class _SignInPageState extends State<SignInPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 28.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
                         onTap: () {
@@ -279,11 +279,11 @@ class _SignInPageState extends State<SignInPage> {
                           'Cadastre-se',
                           style: TextStyle(
                             fontFamily: 'Roboto',
-                            color: Theme.of(context).colorScheme.onSecondary,
+                            color: Theme.of(context).colorScheme.inversePrimary,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.underline,
                             decorationColor:
-                                Theme.of(context).colorScheme.onSecondary,
+                                Theme.of(context).colorScheme.inversePrimary,
                             fontSize: 16.0,
                           ),
                         ),

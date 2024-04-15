@@ -14,7 +14,7 @@ class SuportPage extends StatefulWidget {
 }
 
 class _SuportPageState extends State<SuportPage> {
-  final Uri phoneNumber = Uri.parse('tel:+55 13 99694-5005');
+  final Uri phoneNumber = Uri.parse('tel:+55 13 99724-8398');
   final Uri whatsapp = Uri.parse('https://wa.me/5513997248398');
 
   final String messageError = 'Por favor preencha novamente!';
@@ -96,8 +96,8 @@ class _SuportPageState extends State<SuportPage> {
             child: AlertDialog(
               title: Text(
                 title,
-                style: const TextStyle(
-                  color: Color(0xff6003A2),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
                   fontSize: 16,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w500,
@@ -105,8 +105,8 @@ class _SuportPageState extends State<SuportPage> {
               ),
               content: Text(
                 content,
-                style: const TextStyle(
-                  color: Color(0xff6003A2),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
                   fontSize: 24,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w600,
@@ -140,15 +140,16 @@ class _SuportPageState extends State<SuportPage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Entre em contato',
                         textAlign: TextAlign.start,
                         style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
                           fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -162,7 +163,7 @@ class _SuportPageState extends State<SuportPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Card(
-                          color: Theme.of(context).scaffoldBackgroundColor,
+                          color: Theme.of(context).colorScheme.onBackground,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -179,13 +180,15 @@ class _SuportPageState extends State<SuportPage> {
                                 children: [
                                   Icon(
                                     Icons.phone,
-                                    color: Color(0xff6003A2),
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     size: 64,
                                   ),
                                   Text(
                                     'Telefone',
-                                    style: const TextStyle(
-                                      color: Color(0xff6003A2),
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontSize: 16,
                                       fontFamily: 'Roboto',
                                       fontWeight: FontWeight.w500,
@@ -198,7 +201,7 @@ class _SuportPageState extends State<SuportPage> {
                         ),
                         // SizedBox(width: 8),
                         Card(
-                          color: Theme.of(context).scaffoldBackgroundColor,
+                          color: Theme.of(context).colorScheme.onBackground,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -206,8 +209,10 @@ class _SuportPageState extends State<SuportPage> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(16),
                             onTap: () {
-                              openAnimetedDialog('E-mail de contato',
-                                  "ingressoaquii2@gmail.com");
+                              openAnimetedDialog(
+                                'E-mail de contato',
+                                "ingressoaquii2@gmail.com",
+                              );
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(22),
@@ -216,13 +221,15 @@ class _SuportPageState extends State<SuportPage> {
                                 children: [
                                   Icon(
                                     Icons.email,
-                                    color: Color(0xff6003A2),
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     size: 64,
                                   ),
                                   Text(
                                     'E-mail',
-                                    style: const TextStyle(
-                                      color: Color(0xff6003A2),
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontSize: 16,
                                       fontFamily: 'Roboto',
                                       fontWeight: FontWeight.w500,
@@ -235,7 +242,7 @@ class _SuportPageState extends State<SuportPage> {
                         ),
                         // SizedBox(width: 8),
                         Card(
-                          color: Theme.of(context).scaffoldBackgroundColor,
+                          color: Theme.of(context).colorScheme.onBackground,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -254,12 +261,14 @@ class _SuportPageState extends State<SuportPage> {
                                     'assets/icons/WhatsApp.svg',
                                     height: 64,
                                     width: 64,
-                                    color: Color(0xff6003A2),
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                   Text(
                                     'Whatsapp',
-                                    style: const TextStyle(
-                                      color: Color(0xff6003A2),
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontSize: 16,
                                       fontFamily: 'Roboto',
                                       fontWeight: FontWeight.w500,
@@ -277,15 +286,16 @@ class _SuportPageState extends State<SuportPage> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Ou envie uma mensagem',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -325,12 +335,15 @@ class _SuportPageState extends State<SuportPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Política de privacidade',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            decorationColor:
+                                Theme.of(context).colorScheme.inversePrimary,
+                            fontWeight: FontWeight.w600,
                             decoration: TextDecoration.underline,
                             fontSize: 16.0,
                           ),

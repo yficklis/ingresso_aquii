@@ -86,11 +86,11 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
           title: Center(
             child: Text(
               message,
-              style: const TextStyle(
-                color: Color(0xff260145),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.inversePrimary,
                 fontSize: 16,
                 fontFamily: 'Roboto',
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -135,6 +135,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                     'Vamos atualizar a sua senha. Favor insira abaixo o seu os dados necessários.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       fontSize: 16,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w600,
