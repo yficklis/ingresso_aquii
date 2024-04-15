@@ -15,7 +15,10 @@ class EmptyShoppingCart extends StatelessWidget {
           ),
           Text(
             "Seu Carrinho está vazio!",
-            style: GoogleFonts.dmSerifDisplay(fontSize: 28),
+            style: GoogleFonts.dmSerifDisplay(
+              fontSize: 28,
+              color: Theme.of(context).colorScheme.inversePrimary,
+            ),
           ),
         ],
       ),

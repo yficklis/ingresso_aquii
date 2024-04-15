@@ -16,6 +16,7 @@ class _MyTicketsState extends State<MyTickets> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         leading: Padding(
           padding: EdgeInsets.only(right: 16),
           child: IconButton(
@@ -29,13 +30,15 @@ class _MyTicketsState extends State<MyTickets> {
         title: Text(
           'Minhas compras',
           style: TextStyle(
-            color: Color(0xff6003A2),
+            color: Theme.of(context).colorScheme.inversePrimary,
             fontSize: 20,
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w600,
           ),
         ),
-        iconTheme: IconThemeData(color: Color(0xff6003A2)),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.inversePrimary,
+        ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -61,7 +64,10 @@ class _MyTicketsState extends State<MyTickets> {
                   ),
                   Text(
                     "Nenhum pedido encontrado",
-                    style: GoogleFonts.inter(fontSize: 18),
+                    style: GoogleFonts.dmSerifDisplay(
+                      fontSize: 28,
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                    ),
                   ),
                 ],
               ),
@@ -88,7 +94,9 @@ class _MyTicketsState extends State<MyTickets> {
               ticket['tipo'],
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 18.0,
+                fontFamily: 'Roboto',
+                fontSize: 20,
+                color: Theme.of(context).colorScheme.onBackground,
               ),
             ),
           ),
@@ -100,8 +108,24 @@ class _MyTicketsState extends State<MyTickets> {
       ticketWidgets.add(
         ListTile(
           leading: Image.asset('assets/images/checked.png'),
-          title: Text('ID do Lote: ${ticket['loteId']}'),
-          subtitle: Text('ID do Ingresso: ${ticket['ingressoId']}'),
+          title: Text(
+            'ID do Lote: ${ticket['loteId']}',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Roboto',
+              fontSize: 16,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+          ),
+          subtitle: Text(
+            'ID do Ingresso: ${ticket['ingressoId']}',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Roboto',
+              fontSize: 16,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+          ),
           // Adicione mais informações do ticket conforme necessário
         ),
       );

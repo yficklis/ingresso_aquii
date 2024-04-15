@@ -14,13 +14,13 @@ class CustomNavBar extends StatelessWidget {
       margin: EdgeInsets.all(25),
       child: GNav(
         onTabChange: (value) => onTabChange!(value),
-        color: Colors.grey[600],
+        color: Theme.of(context).colorScheme.inversePrimary,
         mainAxisAlignment: MainAxisAlignment.center,
         activeColor: Color(0xff6003A2),
         tabBackgroundColor: Color(0xffFEFAFF),
         tabBorderRadius: 24,
         tabActiveBorder: Border.all(
-          color: Colors.deepPurple.shade200,
+          color: Theme.of(context).colorScheme.onBackground,
         ),
         gap: 5,
         tabs: [

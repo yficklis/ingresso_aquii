@@ -50,10 +50,10 @@ class _ProductDetailState extends State<ProductDetail> {
         context: context,
         barrierDismissible: false,
         builder: (builder) => AlertDialog(
-          content: const Text(
+          content: Text(
             'Adicionado com sucesso ao carrinho!',
             style: TextStyle(
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.inversePrimary,
               fontSize: 18,
             ),
             textAlign: TextAlign.center,
@@ -69,6 +69,7 @@ class _ProductDetailState extends State<ProductDetail> {
                 },
                 icon: Icon(
                   Icons.done,
+                  color: Theme.of(context).colorScheme.inversePrimary,
                 ),
               ),
             ),
@@ -98,24 +99,31 @@ class _ProductDetailState extends State<ProductDetail> {
                   const SizedBox(height: 25),
                   Text(
                     widget.product.subscription,
-                    style: GoogleFonts.dmSerifDisplay(fontSize: 32),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                      fontFamily: 'Roboto',
+                    ),
                   ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 8),
                   Text(
                     "Descrição",
                     style: TextStyle(
-                      color: Colors.grey[900],
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
+                      fontFamily: 'Roboto',
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Text(
-                    ' Ingresso válido apenas para a sessão e a data indicadas. Não é permitida a entrada após o início do filme. O ingresso é pessoal e intransferível. Não nos responsabilizamos por ingressos perdidos ou roubados. Por favor, mantenha o ingresso em mãos para apresentação na entrada da sala.',
+                    'Ingresso válido apenas para a sessão e a data indicadas. Não é permitida a entrada após o início do filme. O ingresso é pessoal e intransferível. Não nos responsabilizamos por ingressos perdidos ou roubados. Por favor, mantenha o ingresso em mãos para apresentação na entrada da sala.',
                     style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 14,
-                      height: 2,
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontSize: 16,
+                      height: 1.5,
+                      fontFamily: 'Roboto',
                     ),
                   )
                 ],
@@ -134,7 +142,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'R\$ ${widget.product.price.toStringAsFixed(2)}',
+                      'R\$ ${widget.product.price.toStringAsFixed(2).replaceAll('.', ',')}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -202,7 +210,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       Text(
                         'Adicionar ao carrinho',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.tertiary,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
@@ -211,7 +219,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       const SizedBox(width: 10),
                       Icon(
                         Icons.arrow_forward,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ],
                   ),

@@ -38,17 +38,21 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onBackground,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
           'Finalizar Pagamento',
           style: TextStyle(
-            color: Color(0xff6003A2),
+            color: Theme.of(context).colorScheme.inversePrimary,
             fontSize: 20,
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w600,
           ),
         ),
-        iconTheme: IconThemeData(color: Color(0xff6003A2)),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.inversePrimary,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -78,23 +82,36 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).colorScheme.primary,
         child: Row(
           children: [
             Expanded(
               child: Text(
                 'Total:  ${getValueTotal()}',
-                style: GoogleFonts.roboto(
-                  fontSize: 18,
-                  color: Color(0xff363435),
+                style: GoogleFonts.dmSerifDisplay(
+                  fontSize: 28,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
             const SizedBox(width: 16.0),
             Expanded(
               child: FilledButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll<Color>(
+                    Theme.of(context).colorScheme.inversePrimary,
+                  ),
+                ),
                 onPressed: loading ? null : () => handlePayment(),
-                child: const Text(
+                child: Text(
                   'Pagar agora',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
@@ -225,10 +242,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
       context: context,
       barrierDismissible: false,
       builder: (builder) => AlertDialog(
-        content: const Text(
+        content: Text(
           'Compra bem sucedida!',
           style: TextStyle(
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.inversePrimary,
             fontSize: 18,
           ),
           textAlign: TextAlign.center,
@@ -248,6 +265,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               },
               icon: Icon(
                 Icons.done,
+                color: Theme.of(context).colorScheme.inversePrimary,
               ),
             ),
           ),

@@ -52,53 +52,60 @@ class _HallPageState extends State<HallPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // How to use movie ticket
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xffEADDFF),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    child: Column(
-                      children: [
-                        // message
-                        Text(
-                          'Primeira vez? Sem problemas!',
-                          style: GoogleFonts.inter(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff363435),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        // redeem button
-                        GradientButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/howtousepage');
-                          },
-                          borderRadius: BorderRadius.circular(100),
-                          child: Text(
-                            'Saiba como utilizar seu ingresso',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w500,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25.0,
+                  vertical: 25.0,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xffEADDFF),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                      child: Column(
+                        children: [
+                          // message
+                          Text(
+                            'Primeira vez? Sem problemas!',
+                            style: GoogleFonts.roboto(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff363435),
                             ),
                           ),
-                        )
-                      ],
+                          const SizedBox(height: 20),
+                          // redeem button
+                          GradientButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/howtousepage');
+                            },
+                            borderRadius: BorderRadius.circular(100),
+                            child: Text(
+                              'Saiba como utilizar seu ingresso',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               // search bar
-              SizedBox(height: 28),
+              // SizedBox(height: 28),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     TextField(
                       controller: _searchController,
@@ -149,7 +156,8 @@ class _HallPageState extends State<HallPage> {
                   'Produtos',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Inter',
+                    fontFamily: 'Roboto',
+                    fontSize: 16,
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
                 ),

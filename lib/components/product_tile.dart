@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ingresso_aquii/models/product.dart';
 
 class ProductTile extends StatelessWidget {
@@ -35,7 +34,12 @@ class ProductTile extends StatelessWidget {
             // text
             Text(
               product.name,
-              style: GoogleFonts.dmSerifDisplay(fontSize: 20),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.tertiary,
+                fontSize: 20,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w600,
+              ),
             ),
 
             // price
@@ -46,8 +50,13 @@ class ProductTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'R\$ ${product.price.toStringAsFixed(2)}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      'R\$ ${product.price.toStringAsFixed(2).replaceAll('.', ',')}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.tertiary,
+                        fontSize: 16,
+                        fontFamily: 'Roboto',
+                      ),
                     ),
                     SizedBox(height: 4), // Add spacing
                     // Limit the number of lines for the subscription text

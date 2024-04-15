@@ -94,10 +94,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
     cinemaId = await getIdMovieTheatherByName('Praia Grande', 'regional');
 
     if (cinemaId != null) {
-      final data = {'cinemaId': cinemaId, 'type': type, 'limit': limit};
-      Navigator.pop(context);
-      payNowStripe(data);
-      return;
       final lotesSnapshot = await retrieveAllLotesByCinemaId(cinemaId!);
       final listProductByLote = <String, List<String>>{};
 
@@ -228,7 +224,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
               if (value.cart.length > 0)
                 Text(
                   "Seu carrinho",
-                  style: GoogleFonts.dmSerifDisplay(fontSize: 28),
+                  style: GoogleFonts.dmSerifDisplay(
+                    fontSize: 28,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               Expanded(
                 child: ListView.builder(
@@ -256,14 +256,16 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       'Valor total:',
                       style: GoogleFonts.dmSerifDisplay(
                         fontSize: 28,
-                        color: Color(0xff363435),
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
-                      '${getValueTotal()}',
+                      'R\$ ${getValueTotal()}',
                       style: GoogleFonts.dmSerifDisplay(
                         fontSize: 28,
-                        color: Color(0xff363435),
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -283,10 +285,10 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       Text(
                         'Prosseguir para pagamento',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.inversePrimary,
                           fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
                         ),
                       ),
                     ],
