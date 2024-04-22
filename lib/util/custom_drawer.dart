@@ -29,7 +29,29 @@ class CustomDrawer extends StatelessWidget {
               const SizedBox(height: 28),
 
               // home tile
-
+              Padding(
+                padding: const EdgeInsets.only(bottom: 0),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.local_activity_outlined,
+                    color: Colors.grey[800],
+                  ),
+                  title: Text(
+                    'M E U S   I N G R E S S O S',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.w500,
+                      decorationColor: Colors.grey[800],
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/mytickets');
+                  },
+                ),
+              ),
               ExpansionTile(
                 title: Text("C O N F I G U R A Ç Õ E S"),
                 leading: Icon(

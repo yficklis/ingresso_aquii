@@ -30,18 +30,18 @@ class _CustomAppBarState extends State<CustomAppBar> {
       iconTheme: IconThemeData(
         color: Theme.of(context).colorScheme.inversePrimary,
       ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.only(right: 16),
-          child: IconButton(
-            onPressed: () async => Navigator.pushNamed(context, '/mytickets'),
-            icon: const Icon(
-              Icons.local_activity,
-              size: 36,
-            ),
-          ),
-        ),
-      ],
+      // actions: [
+      //   Padding(
+      //     padding: EdgeInsets.only(right: 16),
+      //     child: IconButton(
+      //       onPressed: () async => Navigator.pushNamed(context, '/mytickets'),
+      //       icon: const Icon(
+      //         Icons.local_activity,
+      //         size: 36,
+      //       ),
+      //     ),
+      //   ),
+      // ],
     );
   }
 }

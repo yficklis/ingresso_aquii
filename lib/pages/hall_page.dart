@@ -58,7 +58,7 @@ class _HallPageState extends State<HallPage> {
                   vertical: 25.0,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       decoration: BoxDecoration(

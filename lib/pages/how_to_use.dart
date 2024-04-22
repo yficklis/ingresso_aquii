@@ -45,51 +45,66 @@ class HowToUsePage extends StatelessWidget {
                             children: <TextSpan>[
                               TextSpan(
                                 text:
-                                    'Para resgatar seu ingresso de cinema comprado online, siga estes passos simples:\n\n',
+                                    'Instruções para Resgate de Códigos de Ingressos ou Combos de Cinema\n\n',
                               ),
                               TextSpan(
-                                text: '1. Confirmação de Compra:\n',
+                                text: 'Caro(a) cliente,\n\n',
+                              ),
+                              TextSpan(
+                                text:
+                                    'Agradecemos por escolher nossa plataforma para adquirir seus ingressos ou combos de cinema! Para garantir uma experiência tranquila e satisfatória no resgate de seu produto, por favor, siga atentamente as instruções abaixo:\n\n',
+                              ),
+                              TextSpan(
+                                text: '1. Compra pelo Aplicativo:\n',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
                                 text:
-                                    'Verifique seu e-mail ou a plataforma onde fez a compra para encontrar a confirmação da transação.\n\n',
+                                    'Após realizar a compra do seu ingresso ou combo através do nosso aplicativo, o código correspondente será gerado e vinculado à sua conta. Por favor, esteja ciente de que uma vez realizada a compra, não será possível efetuar reembolso, visto que os códigos são únicos e não reutilizáveis.\n\n',
                               ),
                               TextSpan(
-                                text: '2. Código ou QR Code:\n',
+                                text: '2. Resgate Presencial:\n',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
                                 text:
-                                    'Dentro da confirmação, você encontrará um código único ou um QR code. Este é seu ingresso digital.\n\n',
+                                    'O resgate do seu código de ingresso ou combo deverá ser feito presencialmente na únidade físicas. Escolha a unidade mais conveniente para você e dirija-se ao balcão de atendimento para efetuar o resgate.\n\n',
                               ),
                               TextSpan(
-                                text: '3. Acesso ao Cinema:\n',
+                                text: '3. Não-Modificação de Combos::\n',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
                                 text:
-                                    'No dia do filme, dirija-se ao cinema selecionado.\n\n',
+                                    'Caso tenha adquirido um combo específico, por favor, esteja ciente de que o resgate deverá ser feito exatamente para o combo adquirido. Não será possível realizar trocas ou modificações, como resgatar um combo diferente do adquirido. Por exemplo, se você comprou o Combo X, o código gerado será exclusivo para este combo e não poderá ser utilizado para resgatar o Combo Y.\n\n',
                               ),
                               TextSpan(
-                                text: '4. Apresente o Ingresso:\n',
+                                text: '4. Escolha do Filme:\n',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
                                 text:
-                                    'Na bilheteria ou diretamente na entrada, mostre o código ou QR code ao atendente. Eles escanearão ou verificarão o código para permitir sua entrada.\n\n',
+                                    'Após o resgate do seu código no balcão de atendimento, você terá a liberdade de escolher qualquer filme em exibição para utilizar seu ingresso ou combo. Nossa equipe estará disponível para auxiliá-lo na escolha e no processo de resgate do seu produto.\n\n',
                               ),
                               TextSpan(
-                                text: '5. Aproveite o Filme:\n',
+                                text: '5. Validade do Código:\n',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
                                 text:
-                                    'Com seu ingresso resgatado, entre na sala e desfrute do filme!\n\n',
+                                    'Verifique a validade do seu código antes de realizar o resgate. Códigos expirados não serão aceitos e não poderão ser reativados.\n\n',
+                              ),
+                              TextSpan(
+                                text: '6. Atendimento ao Cliente:\n',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
                                 text:
-                                    'É isso! Com esses passos simples, você estará pronto para aproveitar sua sessão de cinema.',
+                                    'Em caso de dúvidas ou problemas durante o processo de resgate, não hesite em contatar nosso serviço de atendimento ao cliente. Estamos aqui para ajudá-lo e garantir sua satisfação.\n\n',
+                              ),
+                              TextSpan(
+                                text:
+                                    'Agradecemos sua compreensão e colaboração. Esperamos que aproveite seu momento no cinema conosco!',
                               ),
                             ],
                           ),

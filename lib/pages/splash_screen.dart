@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

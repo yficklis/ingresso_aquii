@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ingresso_aquii/main.dart';
@@ -22,6 +24,12 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   CardFieldInputDetails? _card;
   bool loading = false;
+  // GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  // String cardNumber = '';
+  // String expiryDate = '';
+  // String cardHolderName = '';
+  // String cvvCode = '';
+  // bool isCvvFocused = false;
 
   String getValueTotal() {
     return Provider.of<Shop>(context, listen: false).formatTotalPrice();
@@ -65,11 +73,241 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(
-                height: 16.0,
-              ),
+              // const SizedBox(height: 16.0),
+              // CreditCardWidget(
+              //   cardNumber: cardNumber,
+              //   expiryDate: expiryDate,
+              //   cardHolderName: cardHolderName,
+              //   cvvCode: cvvCode,
+              //   showBackView: isCvvFocused,
+              //   onCreditCardWidgetChange: (data) {},
+              //   cardBgColor: Theme.of(context).colorScheme.primary,
+              //   chipColor: Colors.yellow.shade400,
+              //   isHolderNameVisible: true,
+              // ),
+              // const SizedBox(height: 16.0),
+              // CreditCardForm(
+              //   cardNumber: cardNumber,
+              //   expiryDate: expiryDate,
+              //   cardHolderName: cardHolderName,
+              //   cvvCode: cvvCode,
+              //   inputConfiguration: InputConfiguration(
+              //     cardNumberDecoration: InputDecoration(
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //         ),
+              //         borderRadius: BorderRadius.circular(10),
+              //       ),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //           // width: 2,
+              //         ),
+              //         borderRadius: BorderRadius.circular(15),
+              //       ),
+              //       border: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //         ),
+              //       ),
+              //       fillColor: Theme.of(context).colorScheme.onSecondary,
+              //       floatingLabelBehavior: FloatingLabelBehavior.always,
+              //       hintStyle: TextStyle(
+              //         color: Theme.of(context).colorScheme.onSecondary,
+              //         fontFamily: 'Roboto',
+              //         fontWeight: FontWeight.w400,
+              //       ),
+              //       labelStyle: TextStyle(
+              //         color: Theme.of(context).colorScheme.primary,
+              //         fontFamily: 'Roboto',
+              //         fontWeight: FontWeight.w400,
+              //         fontSize: 20.0,
+              //       ),
+              //       hintText: 'XXXX XXXX XXXX XXXX',
+              //       labelText: 'Número do cartão',
+              //     ),
+              //     expiryDateDecoration: InputDecoration(
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //         ),
+              //         borderRadius: BorderRadius.circular(10),
+              //       ),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //           // width: 2,
+              //         ),
+              //         borderRadius: BorderRadius.circular(15),
+              //       ),
+              //       border: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //         ),
+              //       ),
+              //       fillColor: Theme.of(context).colorScheme.onSecondary,
+              //       floatingLabelBehavior: FloatingLabelBehavior.always,
+              //       hintStyle: TextStyle(
+              //         color: Theme.of(context).colorScheme.onSecondary,
+              //         fontFamily: 'Roboto',
+              //         fontWeight: FontWeight.w400,
+              //       ),
+              //       labelStyle: TextStyle(
+              //         color: Theme.of(context).colorScheme.primary,
+              //         fontFamily: 'Roboto',
+              //         fontWeight: FontWeight.w400,
+              //         fontSize: 20.0,
+              //       ),
+              //       labelText: 'Data de validade',
+              //       hintText: 'XX/XX',
+              //     ),
+              //     cvvCodeDecoration: InputDecoration(
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //         ),
+              //         borderRadius: BorderRadius.circular(10),
+              //       ),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //           // width: 2,
+              //         ),
+              //         borderRadius: BorderRadius.circular(15),
+              //       ),
+              //       border: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //         ),
+              //       ),
+              //       fillColor: Theme.of(context).colorScheme.onSecondary,
+              //       floatingLabelBehavior: FloatingLabelBehavior.always,
+              //       hintStyle: TextStyle(
+              //         color: Theme.of(context).colorScheme.onSecondary,
+              //         fontFamily: 'Roboto',
+              //         fontWeight: FontWeight.w400,
+              //       ),
+              //       labelStyle: TextStyle(
+              //         color: Theme.of(context).colorScheme.primary,
+              //         fontFamily: 'Roboto',
+              //         fontWeight: FontWeight.w400,
+              //         fontSize: 20.0,
+              //       ),
+              //       labelText: 'CVV',
+              //       hintText: 'XXX',
+              //     ),
+              //     cardHolderDecoration: InputDecoration(
+              //         enabledBorder: OutlineInputBorder(
+              //           borderSide: BorderSide(
+              //             color: Theme.of(context).colorScheme.onSecondary,
+              //           ),
+              //           borderRadius: BorderRadius.circular(10),
+              //         ),
+              //         focusedBorder: OutlineInputBorder(
+              //           borderSide: BorderSide(
+              //             color: Theme.of(context).colorScheme.onSecondary,
+              //             // width: 2,
+              //           ),
+              //           borderRadius: BorderRadius.circular(15),
+              //         ),
+              //         border: OutlineInputBorder(
+              //           borderSide: BorderSide(
+              //             color: Theme.of(context).colorScheme.onSecondary,
+              //           ),
+              //         ),
+              //         fillColor: Theme.of(context).colorScheme.onSecondary,
+              //         floatingLabelBehavior: FloatingLabelBehavior.always,
+              //         hintStyle: TextStyle(
+              //           color: Theme.of(context).colorScheme.onSecondary,
+              //           fontFamily: 'Roboto',
+              //           fontWeight: FontWeight.w400,
+              //         ),
+              //         labelStyle: TextStyle(
+              //           color: Theme.of(context).colorScheme.primary,
+              //           fontFamily: 'Roboto',
+              //           fontWeight: FontWeight.w400,
+              //           fontSize: 20.0,
+              //         ),
+              //         labelText: 'Titular do cartão',
+              //         hintText: "Nome do titular"),
+              //     cardNumberTextStyle: TextStyle(
+              //       fontSize: 16.0,
+              //       fontFamily: 'Roboto',
+              //       fontWeight: FontWeight.w400,
+              //       color: Theme.of(context).colorScheme.secondary,
+              //     ),
+              //     cardHolderTextStyle: TextStyle(
+              //       fontSize: 16.0,
+              //       fontFamily: 'Roboto',
+              //       fontWeight: FontWeight.w400,
+              //       color: Theme.of(context).colorScheme.secondary,
+              //     ),
+              //     expiryDateTextStyle: TextStyle(
+              //       fontSize: 16.0,
+              //       fontFamily: 'Roboto',
+              //       fontWeight: FontWeight.w400,
+              //       color: Theme.of(context).colorScheme.secondary,
+              //     ),
+              //     cvvCodeTextStyle: TextStyle(
+              //       fontSize: 16.0,
+              //       fontFamily: 'Roboto',
+              //       fontWeight: FontWeight.w400,
+              //       color: Theme.of(context).colorScheme.secondary,
+              //     ),
+              //   ),
+              //   onCreditCardModelChange: (data) {
+              //     setState(() {
+              //       cardNumber = data.cardNumber;
+              //       expiryDate = data.expiryDate;
+              //       cardHolderName = data.cardHolderName;
+              //       cvvCode = data.cvvCode;
+
+              //       String numeroCartao =
+              //           data.cardNumber.replaceAll(RegExp(r"\s+"), "");
+              //       RegExp regex = RegExp(r'^(\d{2})/(\d{2})$');
+              //       RegExpMatch? match = regex.firstMatch(data.expiryDate);
+
+              //       int monthDate = (match != null && match.group(1) != null)
+              //           ? int.parse(match.group(1)!)
+              //           : 0;
+
+              //       int yearDate = (match != null && match.group(2) != null)
+              //           ? int.parse(match.group(2)!)
+              //           : 0;
+
+              //       _card = CardFieldInputDetails(
+              //         complete: true,
+              //         cvc: data.cvvCode,
+              //         expiryMonth: monthDate,
+              //         expiryYear: yearDate,
+              //         number: numeroCartao,
+              //       );
+
+              //       CardDetails(
+              //         number: numeroCartao,
+              //         cvc: data.cvvCode,
+              //         expirationMonth: monthDate,
+              //         expirationYear: yearDate,
+              //       );
+              //     });
+              //   },
+              //   formKey: formKey,
+              // ),
+              const SizedBox(height: 16.0),
               CardFormField(
                 enablePostalCode: false,
+                style: CardFormStyle(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  textColor: Theme.of(context).colorScheme.onBackground,
+                  placeholderColor: Theme.of(context).colorScheme.onBackground,
+                  borderColor: Theme.of(context).colorScheme.onBackground,
+                  textErrorColor: Colors.red.shade300,
+                  borderRadius: 10,
+                  fontSize: 16,
+
+                  // borderWidth: 1,
+                ),
                 countryCode: 'BR',
                 onCardChanged: (card) {
                   setState(() {
@@ -151,7 +389,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Future<void> processPayment() async {
     showDialog(
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: false,
       builder: (context) {
         return const Center(
           child: CircularProgressIndicator(),
