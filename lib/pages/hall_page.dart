@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +8,7 @@ import 'package:ingresso_aquii/pages/product_detail.dart';
 
 import 'package:ingresso_aquii/util/gradient_button.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HallPage extends StatefulWidget {
   const HallPage({super.key});
@@ -20,6 +22,18 @@ class _HallPageState extends State<HallPage> {
   final String messageError = 'Por favor preencha novamente!';
 
   final _searchController = TextEditingController();
+
+  final listImages = [
+    'assets/images/cartas/abigail.jpeg',
+    'assets/images/cartas/a-primeira-profecia.jpeg',
+    'assets/images/cartas/ghostbusters-apocalipse-de-gelo.jpeg',
+    'assets/images/cartas/guerra-civil.jpeg',
+    'assets/images/cartas/jorge-da-capadocia.jpeg',
+    'assets/images/cartas/kung-fu-panda-4.jpeg',
+  ];
+
+  int activeIndex = 0;
+  final controller = CarouselController();
 
   void navigateToFoodDetails(int index) {
     // get the product and it's menu
@@ -45,6 +59,7 @@ class _HallPageState extends State<HallPage> {
     // get the product and it's menu
     final shop = context.read<Shop>();
     final productMenu = shop.productMenu;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -153,18 +168,66 @@ class _HallPageState extends State<HallPage> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Text(
-                  'Produtos',
+                  'Em cartas',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Roboto',
-                    fontSize: 16,
+                    fontSize: 18,
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
                 ),
               ),
 
               SizedBox(height: 16),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CarouselSlider.builder(
+                          itemCount: listImages.length,
+                          itemBuilder: (context, index, realIndex) {
+                            final urlImage = listImages[index];
+                            return buildImage(urlImage, index);
+                          },
+                          options: CarouselOptions(
+                            height: 400,
+                            autoPlay: true,
+                            enableInfiniteScroll: false,
+                            autoPlayAnimationDuration: Duration(seconds: 2),
+                            enlargeCenterPage: true,
+                            onPageChanged: (index, reason) =>
+                                setState(() => activeIndex = index),
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        buildIndicator(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                child: Text(
+                  'Produtos',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto',
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+                ),
+              ),
 
+              SizedBox(height: 16),
               Container(
                 height: 250,
                 child: ListView.builder(
@@ -183,4 +246,17 @@ class _HallPageState extends State<HallPage> {
       ),
     );
   }
+
+  Widget buildIndicator() => AnimatedSmoothIndicator(
+        onDotClicked: animateToSlide,
+        effect: ExpandingDotsEffect(
+            dotWidth: 15, activeDotColor: Colors.blue.shade200),
+        activeIndex: activeIndex,
+        count: listImages.length,
+      );
+
+  void animateToSlide(int index) => controller.animateToPage(index);
 }
+
+Widget buildImage(String urlImage, int index) =>
+    Container(child: Image.asset(urlImage, fit: BoxFit.cover));
